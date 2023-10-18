@@ -49,6 +49,9 @@ class ToastView: UIView {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
+        
+    // Add to your ToastView class properties:
+    private static var backgroundView: UIView? = nil
     
     private var duration: TimeInterval = 0.0
     private var labelPadding: CGFloat = 20.0
@@ -61,8 +64,9 @@ class ToastView: UIView {
     
     static var activeToasts: [ToastView] = []
     
-    static func show(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil) {
+    static func show(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil, withBackground: Bool = false) {
         let toastView = ToastView()
+        
         toastView.duration = duration
         toastView.toastLabel.text = message
         
@@ -86,7 +90,6 @@ class ToastView: UIView {
         }
         
         superview.addSubview(toastView)
-        
         toastView.translatesAutoresizingMaskIntoConstraints = false
         
         switch position {
@@ -127,6 +130,23 @@ class ToastView: UIView {
             ])
         }
         
+        if withBackground {
+                let background = UIView(frame: superview.bounds)
+                background.backgroundColor = UIColor.black.withAlphaComponent(0.6) // semi-transparent
+                background.isUserInteractionEnabled = true // disable interactions
+                superview.addSubview(background)
+                
+                // Use UIVisualEffectView for blur effect if needed
+                let blurEffect = UIBlurEffect(style: .dark)
+                let visualEffectView = UIVisualEffectView(effect: blurEffect)
+                visualEffectView.frame = background.bounds
+                background.addSubview(visualEffectView)
+                
+                backgroundView = background
+            }
+
+            superview.addSubview(toastView)
+        
         toastView.alpha = 0.0
         
         UIView.animate(withDuration: 0.3, animations: {
@@ -142,9 +162,10 @@ class ToastView: UIView {
         activeToasts.append(toastView)
     }
     
+    
     private init() {
         super.init(frame: .zero)
-        
+
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -172,6 +193,10 @@ class ToastView: UIView {
         layer.masksToBounds = true
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -179,8 +204,11 @@ class ToastView: UIView {
     func dismiss() {
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 0.0
+            ToastView.backgroundView?.alpha = 0.0
         }) { _ in
             self.removeFromSuperview()
+            ToastView.backgroundView?.removeFromSuperview()
+            ToastView.backgroundView = nil
             if let index = ToastView.activeToasts.firstIndex(of: self) {
                 ToastView.activeToasts.remove(at: index)
             }
@@ -207,10 +235,7 @@ class ToastView: UIView {
     let controller = UIViewController()
     controller.view.backgroundColor = .green
     let image = UIImage(systemName: "star.fill")
-    let view = UIView(frame: CGRect(x: 1000, y: 64, width: 150, height: 60))
-    view.backgroundColor = .red
-    controller.view.addSubview(view)
-    ToastView.show(message: "10:19 AM", image: image, isProgress: true, position: .bottom)
+    ToastView.show(message: "10:19 AM", image: image, isProgress: true, position: .bottom, withBackground: true)
     /*
     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
         ToastView.dismiss()
