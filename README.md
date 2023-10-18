@@ -2,8 +2,7 @@
 
 Easily display toast messages with optional icons, progress indicators, and blurred backgrounds in your iOS app.
 
-![Screenshot of ToastView](link-to-screenshot.png) 
-<!-- Replace with a link to a screenshot of your toast in action -->
+![Screenshot of ToastView](https://github.com/paoloandrea/ToastView/Assets/toastview_v1.gif)
 
 ## Features
 

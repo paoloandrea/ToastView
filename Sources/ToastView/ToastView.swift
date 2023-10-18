@@ -8,7 +8,7 @@
 import UIKit
 
 /// An enum representing the possible positions for a toast on the screen.
-enum ToastPosition {
+public enum ToastPosition {
     case topLeft, top, topRight, center, bottomLeft, bottom, bottomRight
 }
 
@@ -17,8 +17,8 @@ enum ToastPosition {
 /// - Note:
 ///   Toasts can be accompanied by icons or a loading spinner.
 ///   They can be displayed at various positions on the screen.
-@available(iOS 13.0, *)
-class ToastView: UIView {
+@available(iOS 15.0, tvOS 15.0, *)
+public final class ToastView: UIView {
     
     /// The internal stack view that organizes the toast's content.
     private let stackView: UIStackView = {
@@ -87,7 +87,7 @@ class ToastView: UIView {
     ///
     /// - Note:
     ///   If both `image` and `isProgress` are provided, the image takes precedence and the loading spinner is not shown.
-    static func show(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil, withBackground: Bool = false) {
+    public static func show(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil, withBackground: Bool = false) {
         let toastView = ToastView()
         
         toastView.duration = duration
@@ -244,7 +244,7 @@ class ToastView: UIView {
     }
     
     /// Dismisses all active toasts currently being displayed.
-    static func dismiss() {
+    public static func dismiss() {
         for toast in activeToasts {
             toast.dismiss()
         }
