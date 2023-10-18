@@ -5,19 +5,26 @@ import PackageDescription
 
 let package = Package(
     name: "ToastView",
+    platforms: [
+        .iOS(.v13),
+        .tvOS(.v13)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "ToastView",
             targets: ["ToastView"]),
     ],
+    dependencies: [
+        // Any external packages that your library might depend on
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ToastView"),
+            name: "ToastView",
+            dependencies: [] // Dependencies related to your ToastView target
+        ),
         .testTarget(
             name: "ToastViewTests",
-            dependencies: ["ToastView"]),
+            dependencies: ["ToastView"]
+        ),
     ]
 )

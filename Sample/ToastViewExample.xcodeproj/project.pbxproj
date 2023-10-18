@@ -16,7 +16,7 @@
 		527A4D532AE044B900C7BA1C /* ToastViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D522AE044B900C7BA1C /* ToastViewExampleTests.swift */; };
 		527A4D5D2AE044B900C7BA1C /* ToastViewExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D5C2AE044B900C7BA1C /* ToastViewExampleUITests.swift */; };
 		527A4D5F2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D5E2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift */; };
-		527A4D6F2AE0453500C7BA1C /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D6E2AE0453500C7BA1C /* ToastView.swift */; };
+		527A4D752AE054B300C7BA1C /* ToastView in Frameworks */ = {isa = PBXBuildFile; productRef = 527A4D742AE054B300C7BA1C /* ToastView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		527A4D582AE044B900C7BA1C /* ToastViewExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToastViewExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		527A4D5C2AE044B900C7BA1C /* ToastViewExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewExampleUITests.swift; sourceTree = "<group>"; };
 		527A4D5E2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		527A4D6E2AE0453500C7BA1C /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToastView.swift; path = ../../Sources/ToastView/ToastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527A4D752AE054B300C7BA1C /* ToastView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +101,6 @@
 		527A4D3A2AE044B700C7BA1C /* ToastViewExample */ = {
 			isa = PBXGroup;
 			children = (
-				527A4D6D2AE0451F00C7BA1C /* ToastView */,
 				527A4D3B2AE044B700C7BA1C /* AppDelegate.swift */,
 				527A4D3D2AE044B700C7BA1C /* SceneDelegate.swift */,
 				527A4D3F2AE044B700C7BA1C /* ViewController.swift */,
@@ -130,14 +129,6 @@
 			path = ToastViewExampleUITests;
 			sourceTree = "<group>";
 		};
-		527A4D6D2AE0451F00C7BA1C /* ToastView */ = {
-			isa = PBXGroup;
-			children = (
-				527A4D6E2AE0453500C7BA1C /* ToastView.swift */,
-			);
-			name = ToastView;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -154,6 +145,9 @@
 			dependencies = (
 			);
 			name = ToastViewExample;
+			packageProductDependencies = (
+				527A4D742AE054B300C7BA1C /* ToastView */,
+			);
 			productName = ToastViewExample;
 			productReference = 527A4D382AE044B700C7BA1C /* ToastViewExample.app */;
 			productType = "com.apple.product-type.application";
@@ -226,6 +220,9 @@
 				Base,
 			);
 			mainGroup = 527A4D2F2AE044B700C7BA1C;
+			packageReferences = (
+				527A4D732AE054B300C7BA1C /* XCRemoteSwiftPackageReference "ToastView" */,
+			);
 			productRefGroup = 527A4D392AE044B700C7BA1C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -269,7 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				527A4D6F2AE0453500C7BA1C /* ToastView.swift in Sources */,
 				527A4D402AE044B700C7BA1C /* ViewController.swift in Sources */,
 				527A4D3C2AE044B700C7BA1C /* AppDelegate.swift in Sources */,
 				527A4D3E2AE044B700C7BA1C /* SceneDelegate.swift in Sources */,
@@ -619,6 +615,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		527A4D732AE054B300C7BA1C /* XCRemoteSwiftPackageReference "ToastView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/paoloandrea/ToastView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		527A4D742AE054B300C7BA1C /* ToastView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527A4D732AE054B300C7BA1C /* XCRemoteSwiftPackageReference "ToastView" */;
+			productName = ToastView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 527A4D302AE044B700C7BA1C /* Project object */;
 }
