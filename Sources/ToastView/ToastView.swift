@@ -17,7 +17,6 @@ public enum ToastPosition {
 /// - Note:
 ///   Toasts can be accompanied by icons or a loading spinner.
 ///   They can be displayed at various positions on the screen.
-@available(iOS 15.0, tvOS 15.0, *)
 public final class ToastView: UIView {
     
     /// The internal stack view that organizes the toast's content.
@@ -75,6 +74,12 @@ public final class ToastView: UIView {
     
     static var activeToasts: [ToastView] = []
     
+    // Indicates whether the ToastView is currently showing on the screen
+        private var _isShowing: Bool = false
+        public var isShowing: Bool {
+            return _isShowing
+        }
+    
     /// Displays a toast message on the screen.
     ///
     /// - Parameters:
@@ -92,6 +97,7 @@ public final class ToastView: UIView {
         
         toastView.duration = duration
         toastView.toastLabel.text = message
+        toastView._isShowing = true  // Set the visibility to true when showing the toast
         
         if let image = image {
             toastView.iconImageView.image = image.withTintColor(.white)
@@ -240,6 +246,7 @@ public final class ToastView: UIView {
             if let index = ToastView.activeToasts.firstIndex(of: self) {
                 ToastView.activeToasts.remove(at: index)
             }
+            self._isShowing = false
         }
     }
     
