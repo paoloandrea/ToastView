@@ -4,7 +4,6 @@
 //
 //  Created by Paolo Rossignoli on 14/09/23.
 //
-
 import UIKit
 
 /// An enum representing the possible positions for a toast on the screen.
@@ -24,7 +23,7 @@ public final class ToastView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -34,7 +33,7 @@ public final class ToastView: UIView {
         let label = UILabel()
         label.textColor = .white
 #if os(iOS)
-        label.font = .systemFont(ofSize: 17)
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
 #elseif os(tvOS)
         label.font = .systemFont(ofSize: 29)
 #endif
@@ -61,136 +60,29 @@ public final class ToastView: UIView {
     }()
     
     // Add to your ToastView class properties:
-    private static var backgroundView: UIView? = nil
+    private var backgroundView: UIView? = nil
     
     private var duration: TimeInterval = 0.0
-    private var labelPadding: CGFloat = 20.0
-#if os(iOS)
-    private static let imageSize = 29.0
-#elseif os(tvOS)
-    private static let imageSize = 44.0
-#endif
-    private static let toastPadding = 3.0
     
-    static var activeToasts: [ToastView] = []
+#if os(iOS)
+    private var labelPadding: CGFloat = 16.0
+    private let imageSize = 25.0
+    private let toastHeight:CGFloat = 37
+#elseif os(tvOS)
+    private var labelPadding: CGFloat = 20.0
+    private let imageSize = 44.0
+    private let toastHeight:CGFloat = 60
+#endif
+    private let toastPadding = 4.0
+    public var position:ToastPosition?
+    public var containerView: UIView?
+    var dismissHandler: (() -> Void)?
     
     // Indicates whether the ToastView is currently showing on the screen
-        private var _isShowing: Bool = false
-        public var isShowing: Bool {
-            return _isShowing
-        }
-    
-    /// Displays a toast message on the screen.
-    ///
-    /// - Parameters:
-    ///   - message: The message to be displayed.
-    ///   - image: An optional image icon to accompany the message.
-    ///   - isProgress: Determines if a loading spinner should be displayed. Defaults to `false`.
-    ///   - position: The position on the screen where the toast should appear. Defaults to `.center`.
-    ///   - duration: The duration for which the toast should be displayed. Defaults to `0` (indefinitely).
-    ///   - view: The view on which the toast should be displayed. Defaults to the key window.
-    ///
-    /// - Note:
-    ///   If both `image` and `isProgress` are provided, the image takes precedence and the loading spinner is not shown.
-    public static func show(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil, withBackground: Bool = false) {
-        let toastView = ToastView()
-        
-        toastView.duration = duration
-        toastView.toastLabel.text = message
-        toastView._isShowing = true  // Set the visibility to true when showing the toast
-        
-        if let image = image {
-            toastView.iconImageView.image = image.withTintColor(.white)
-            toastView.stackView.insertArrangedSubview(toastView.iconImageView, at: 0)
-            toastView.iconImageView.widthAnchor.constraint(equalToConstant: ToastView.imageSize).isActive = true
-            toastView.iconImageView.heightAnchor.constraint(equalToConstant: ToastView.imageSize).isActive = true
-        } else if isProgress {
-            toastView.stackView.insertArrangedSubview(toastView.activityIndicator, at: 0)
-            toastView.activityIndicator.startAnimating()
-        }
-        
-        let superview: UIView
-        if let customView = view {
-            superview = customView
-        } else if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            superview = keyWindow
-        } else {
-            return
-        }
-        
-        superview.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        
-        switch position {
-        case .topLeft:
-            NSLayoutConstraint.activate([
-                toastView.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: ToastView.toastPadding),
-                toastView.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: ToastView.toastPadding),
-            ])
-        case .top:
-            NSLayoutConstraint.activate([
-                toastView.centerXAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.centerXAnchor),
-                toastView.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: ToastView.toastPadding),
-            ])
-        case .topRight:
-            NSLayoutConstraint.activate([
-                toastView.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -ToastView.toastPadding),
-                toastView.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: ToastView.toastPadding),
-            ])
-        case .center:
-            NSLayoutConstraint.activate([
-                toastView.centerXAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.centerXAnchor),
-                toastView.centerYAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.centerYAnchor),
-            ])
-        case .bottomLeft:
-            NSLayoutConstraint.activate([
-                toastView.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: ToastView.toastPadding),
-                toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -ToastView.toastPadding),
-            ])
-        case .bottom:
-            NSLayoutConstraint.activate([
-                toastView.centerXAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.centerXAnchor),
-                toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -ToastView.toastPadding),
-            ])
-        case .bottomRight:
-            NSLayoutConstraint.activate([
-                toastView.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -ToastView.toastPadding),
-                toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -ToastView.toastPadding),
-            ])
-        }
-        
-        if withBackground {
-            let background = UIView(frame: superview.bounds)
-            background.backgroundColor = UIColor.black.withAlphaComponent(0.6) // semi-transparent
-            background.isUserInteractionEnabled = true // disable interactions
-            superview.addSubview(background)
-            
-            // Use UIVisualEffectView for blur effect if needed
-            let blurEffect = UIBlurEffect(style: .dark)
-            let visualEffectView = UIVisualEffectView(effect: blurEffect)
-            visualEffectView.frame = background.bounds
-            background.addSubview(visualEffectView)
-            
-            backgroundView = background
-        }
-        
-        superview.addSubview(toastView)
-        
-        toastView.alpha = 0.0
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            toastView.alpha = 1.0
-        }) { _ in
-            if duration > 0.0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                    toastView.dismiss()
-                }
-            }
-        }
-        
-        activeToasts.append(toastView)
+    private var _isShowing: Bool = false
+    public var isShowing: Bool {
+        return _isShowing
     }
-    
     
     private init() {
         super.init(frame: .zero)
@@ -211,14 +103,14 @@ public final class ToastView: UIView {
             visualEffectView.topAnchor.constraint(equalTo: topAnchor),
             visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: toastHeight),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: labelPadding),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -labelPadding),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0),
         ])
         
-        layer.cornerRadius = 30
+        layer.cornerRadius = toastHeight / 2
         layer.masksToBounds = true
     }
     
@@ -230,35 +122,140 @@ public final class ToastView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Displays a toast message on the screen.
+    ///
+    /// - Parameters:
+    ///   - message: The message to be displayed.
+    ///   - image: An optional image icon to accompany the message.
+    ///   - isProgress: Determines if a loading spinner should be displayed. Defaults to `false`.
+    ///   - position: The position on the screen where the toast should appear. Defaults to `.center`.
+    ///   - duration: The duration for which the toast should be displayed. Defaults to `0` (indefinitely).
+    ///   - view: The view on which the toast should be displayed. Defaults to the key window.
+    ///
+    /// - Note:
+    ///   If both `image` and `isProgress` are provided, the image takes precedence and the loading spinner is not shown.
+    func prepareToShow(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 0, in view: UIView? = nil, withBackground: Bool = false, completion: (() -> Void)? = nil) {
+       
+        self.duration = duration
+        self.toastLabel.text = message
+        self._isShowing = true  // Set the visibility to true when showing the toast
+        self.position = position
+        
+        if let image = image {
+            self.iconImageView.image = image.withTintColor(.white)
+            self.stackView.insertArrangedSubview(self.iconImageView, at: 0)
+            self.iconImageView.widthAnchor.constraint(equalToConstant: self.imageSize).isActive = true
+            self.iconImageView.heightAnchor.constraint(equalToConstant: self.imageSize).isActive = true
+        } else if isProgress {
+            self.stackView.insertArrangedSubview(self.activityIndicator, at: 0)
+            self.activityIndicator.startAnimating()
+        }
+        
+        
+        if let view = view {
+            self.containerView = view
+        } else if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            self.containerView = keyWindow
+        } else {
+            return
+        }
+        
+        guard let containerView = containerView else {
+            return
+        }
+        containerView.addSubview(self)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        switch position {
+        case .topLeft:
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
+                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
+            ])
+        case .top:
+            NSLayoutConstraint.activate([
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
+                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
+            ])
+        case .topRight:
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
+                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
+            ])
+        case .center:
+            NSLayoutConstraint.activate([
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
+                self.centerYAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerYAnchor),
+            ])
+        case .bottomLeft:
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+            ])
+        case .bottom:
+            NSLayoutConstraint.activate([
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+            ])
+        case .bottomRight:
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+            ])
+        }
+        
+        if withBackground {
+            let background = UIView(frame: containerView.bounds)
+            background.backgroundColor = UIColor.black.withAlphaComponent(0.6) // semi-transparent
+            background.isUserInteractionEnabled = true // disable interactions
+            containerView.addSubview(background)
+            
+            // Use UIVisualEffectView for blur effect if needed
+            let blurEffect = UIBlurEffect(style: .dark)
+            let visualEffectView = UIVisualEffectView(effect: blurEffect)
+            visualEffectView.frame = background.bounds
+            background.addSubview(visualEffectView)
+            
+            backgroundView = background
+        }
+        
+        containerView.addSubview(self)
+        
+        self.alpha = 0.0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.alpha = 1.0
+        }) { _ in
+            if duration > 0.0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                    self.dismiss(completion: completion)
+                }
+            }
+        }
+    }
+   
     /// Dismisses the toast, fading it out of view.
     ///
     /// - Note:
     ///   This method is called automatically after the duration specified when showing the toast.
     ///   It can also be called manually if needed.
-    func dismiss() {
+    func dismiss(completion: (() -> Void)? = nil) {
+        // ... existing implementation ...
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 0.0
-            ToastView.backgroundView?.alpha = 0.0
+            self.backgroundView?.alpha = 0.0
         }) { _ in
             self.removeFromSuperview()
-            ToastView.backgroundView?.removeFromSuperview()
-            ToastView.backgroundView = nil
-            if let index = ToastView.activeToasts.firstIndex(of: self) {
-                ToastView.activeToasts.remove(at: index)
-            }
+            self.backgroundView?.removeFromSuperview()
+            self.backgroundView = nil
+            
             self._isShowing = false
+            completion?()
         }
-    }
-    
-    /// Dismisses all active toasts currently being displayed.
-    public static func dismiss() {
-        for toast in activeToasts {
-            toast.dismiss()
-        }
-        //activeToasts.first?.dismiss()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 }
+
