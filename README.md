@@ -1,4 +1,4 @@
-# ToastView 🍞
+# ToastView 2.0 🍞
 
 Easily display toast messages with optional icons, progress indicators, and blurred backgrounds in your iOS app.
 
@@ -19,43 +19,61 @@ Easily display toast messages with optional icons, progress indicators, and blur
 
 ### Manual
 
-1. Download the `ToastView.swift` file from this repository.
+1. Download the `ToastManager.swift` and `ToastView.swift` file from this repository.
 2. Add it to your Xcode project.
 
 ## Usage
 
 1. **Basic Toast**
-    ```swift
-    ToastView.show(message: "Hello World", position: .center)
-    ```
+Since `ToastManager` is a singleton, you do not instantiate it directly. Instead, you access the shared instance as follows:
+
+```swift
+let toastManager = ToastManager.shared
+```
+
+```swift
+toastManager.showToast(
+    message: "Your message here",
+    image: UIImage(named: "your_image_name"),
+    isProgress: false,
+    position: .center,
+    duration: 2.0,
+    in: yourView,
+    withBackground: true)
+```
 
 2. **Toast with Icon**
-    ```swift
+
+```swift
     let image = UIImage(systemName: "star.fill")
-    ToastView.show(message: "Starred", image: image, position: .top)
-    ```
+    toastManager.showToast(message: "Starred", image: image, position: .top)
+```
 
 3. **Toast with Progress Indicator**
-    ```swift
-    ToastView.show(message: "Loading...", isProgress: true, position: .bottom)
-    ```
+
+```swift
+    toastManager.showToast(message: "Loading...", isProgress: true, position: .bottom)
+```
 
 4. **Toast with Blurred Background Overlay**
-    ```swift
-    ToastView.show(message: "Blurred Background", position: .center, withBackground: true)
-    ```
+
+```swift
+    toastManager.showToast(message: "Blurred Background", position: .center, withBackground: true)
+```
 
 5. **Dismiss Toast Manually**
-    ```swift
-    ToastView.dismiss()
-    ```
+
+```swift
+    toastManager.cancelCurrentToast()
+```
 
 6. **Dismiss Toast After a Delay**
-    ```swift
+
+```swift
     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-        ToastView.dismiss()
+        toastManager.cancelCurrentToast()
     }
-    ```
+```
 
 ## Customization
 
@@ -64,17 +82,23 @@ Easily display toast messages with optional icons, progress indicators, and blur
 You can set the duration for which a toast should be displayed.
 
 ```swift
-ToastView.show(message: "This will dismiss in 5 seconds", duration: 5.0)
-    ```
+toastManager.showToast(message: "This will dismiss in 5 seconds", duration: 5.0)
+```
 
-Toast Position
+### Toast Position
 Position the toast wherever you want using the ToastPosition enum.
 
-##Contributing
+## Configuration Options
+
+- **allowMultipleToasts**: Set to true to allow showing multiple toasts at once.
+- **toastPadding**: The spacing between multiple toasts, if enabled.
+
+This guide should provide you with the basic usage of the ToastManager class to manage toast notifications in your app.
+
+## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-License
-
-MIT
+## License
+#### MIT
 https://choosealicense.com/licenses/mit/

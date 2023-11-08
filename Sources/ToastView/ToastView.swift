@@ -253,9 +253,6 @@ public final class ToastView: UIView {
             completion?()
         }
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+
 }
 

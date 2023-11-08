@@ -6,19 +6,38 @@
 //
 
 import UIKit
-
+/// The `ToastManager` class is a singleton that manages the display of toast messages on the screen.
+/// It ensures that only one instance of the manager exists and controls the queuing and displaying of toasts.
+/// It provides functionality to show, dismiss, and cancel toasts with various configurations.
 class ToastManager {
-    
+    /// The shared instance of `ToastManager`.
     static let shared = ToastManager()
     
-    private init() {} // Private initialization to ensure only one instance is created.
+    /// Private initialization to ensure only one instance is created.
+    private init() {}
     
+    /// The queue that holds the `ToastView` objects that are waiting to be displayed.
     private var toastQueue = [ToastView]()
+    
+    /// A boolean value indicating whether a toast is currently being displayed.
     private var isCurrentlyShowing = false
+    
+    /// A boolean value that determines whether multiple toasts can be shown at once.
+    /// The default value is `false`, meaning only one toast will be shown at a time.
     public var allowMultipleToasts = false
+    
+    /// The padding between toasts when multiple toasts are displayed.
     private var toastPadding: CGFloat = 4
     
-    /// Shows a toast with given parameters.
+    /// Shows a toast message with optional image, progress, position, duration, view, and background settings.
+    /// - Parameters:
+    ///   - message: The message to be displayed on the toast.
+    ///   - image: An optional image to display on the toast.
+    ///   - isProgress: A boolean indicating if the toast is showing a progress indicator.
+    ///   - position: The position on the screen where the toast will be displayed.
+    ///   - duration: The time interval the toast will be on screen before auto-dismissing.
+    ///   - view: An optional view to add the toast to. If not provided, the toast will be added to the key window.
+    ///   - withBackground: A boolean indicating if the toast should be displayed with a background.
     func showToast(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 2.0, in view: UIView? = nil, withBackground: Bool = false) {
         
         let containerView = view ?? UIApplication.shared.keyWindow ?? UIView()
@@ -38,6 +57,9 @@ class ToastManager {
         
     }
     
+    /// Updates the positions of all the toasts in the queue within the container view.
+    /// It respects the `allowMultipleToasts` setting and adjusts the layout constraints accordingly.
+    /// - Parameter containerView: The `UIView` that contains the toasts.
     private func updateToastPositions(in containerView: UIView) {
         guard allowMultipleToasts else { return }
         var yOffset:CGFloat = 0
@@ -86,7 +108,10 @@ class ToastManager {
         }
     }
     
-    /// Dismisses a specific toast.
+    /// Dismisses a specific toast view from the screen and from the queue.
+    /// - Parameters:
+    ///   - toast: The `ToastView` object that needs to be dismissed.
+    ///   - containerView: The `UIView` that contains the toast.
     func dismiss(toast: ToastView, from containerView: UIView) {
         guard toastQueue.contains(toast) else { return }
         
@@ -106,6 +131,7 @@ class ToastManager {
         }
     }
     
+    /// Cancels and dismisses the currently displayed toast, if any, and updates the queue and positions of remaining toasts.
     func cancelCurrentToast() {
         // Se c'è un toast attualmente mostrato, lo rimuove
         guard let currentToast = toastQueue.first else { return }
@@ -123,6 +149,7 @@ class ToastManager {
     }
     
     /// Cancels and clears all queued and currently displayed toasts.
+    /// This will remove all `ToastView` objects from the screen and empty the queue.
     func cancelAllToasts() {
         while !toastQueue.isEmpty {
             let toast = toastQueue.removeLast()
@@ -133,9 +160,4 @@ class ToastManager {
         
         isCurrentlyShowing = false
     }
-}
-
-
-#Preview() {
-    ViewController()
 }
