@@ -16,7 +16,7 @@ public enum ToastPosition {
 /// - Note:
 ///   Toasts can be accompanied by icons or a loading spinner.
 ///   They can be displayed at various positions on the screen.
-public final class ToastView: UIView {
+public class ToastView: UIView {
     
     /// The internal stack view that organizes the toast's content.
     private let stackView: UIStackView = {

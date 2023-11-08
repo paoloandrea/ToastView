@@ -9,9 +9,9 @@ import UIKit
 /// The `ToastManager` class is a singleton that manages the display of toast messages on the screen.
 /// It ensures that only one instance of the manager exists and controls the queuing and displaying of toasts.
 /// It provides functionality to show, dismiss, and cancel toasts with various configurations.
-class ToastManager {
+public final class ToastManager {
     /// The shared instance of `ToastManager`.
-    static let shared = ToastManager()
+    public static let shared = ToastManager()
     
     /// Private initialization to ensure only one instance is created.
     private init() {}
@@ -20,7 +20,7 @@ class ToastManager {
     private var toastQueue = [ToastView]()
     
     /// A boolean value indicating whether a toast is currently being displayed.
-    private var isCurrentlyShowing = false
+    public var isCurrentlyShowing = false
     
     /// A boolean value that determines whether multiple toasts can be shown at once.
     /// The default value is `false`, meaning only one toast will be shown at a time.
@@ -38,7 +38,7 @@ class ToastManager {
     ///   - duration: The time interval the toast will be on screen before auto-dismissing.
     ///   - view: An optional view to add the toast to. If not provided, the toast will be added to the key window.
     ///   - withBackground: A boolean indicating if the toast should be displayed with a background.
-    func showToast(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 2.0, in view: UIView? = nil, withBackground: Bool = false) {
+    public func showToast(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 2.0, in view: UIView? = nil, withBackground: Bool = false) {
         
         let containerView = view ?? UIApplication.shared.keyWindow ?? UIView()
         
@@ -132,7 +132,7 @@ class ToastManager {
     }
     
     /// Cancels and dismisses the currently displayed toast, if any, and updates the queue and positions of remaining toasts.
-    func cancelCurrentToast() {
+    public func cancelCurrentToast() {
         // Se c'è un toast attualmente mostrato, lo rimuove
         guard let currentToast = toastQueue.first else { return }
         
@@ -150,7 +150,7 @@ class ToastManager {
     
     /// Cancels and clears all queued and currently displayed toasts.
     /// This will remove all `ToastView` objects from the screen and empty the queue.
-    func cancelAllToasts() {
+    public func cancelAllToasts() {
         while !toastQueue.isEmpty {
             let toast = toastQueue.removeLast()
             toast.dismiss() {
