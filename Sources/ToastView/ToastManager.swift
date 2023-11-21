@@ -47,7 +47,7 @@ public final class ToastManager {
         }
         
         let toast = ToastView()
-        toast.prepareToShow(message: message, image: image, isProgress: isProgress, position: position, duration: duration, withBackground: withBackground)
+        toast.prepareToShow(message: message, image: image, isProgress: isProgress, position: position, duration: duration, in:view, withBackground: withBackground)
         
         toastQueue.append(toast)
         containerView.addSubview(toast)
