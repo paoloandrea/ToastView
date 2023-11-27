@@ -37,7 +37,7 @@ public class ToastView: UIView {
 #elseif os(tvOS)
         label.font = .systemFont(ofSize: 29)
 #endif
-        label.textAlignment = .center
+        //label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -73,7 +73,7 @@ public class ToastView: UIView {
     private let imageSize = 44.0
     private let toastHeight:CGFloat = 60
 #endif
-    private let toastPadding = 4.0
+    private let toastPadding = 8.0
     public var position:ToastPosition?
     public var containerView: UIView?
     var dismissHandler: (() -> Void)?
@@ -103,14 +103,16 @@ public class ToastView: UIView {
             visualEffectView.topAnchor.constraint(equalTo: topAnchor),
             visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: toastHeight),
+            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: toastHeight-toastPadding),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: labelPadding),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -labelPadding),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: toastPadding),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -toastPadding),
+            
+            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
         
-        layer.cornerRadius = toastHeight / 2
+        layer.cornerRadius = (toastHeight+toastPadding) / 2
         layer.masksToBounds = true
     }
     
@@ -148,6 +150,8 @@ public class ToastView: UIView {
             self.iconImageView.heightAnchor.constraint(equalToConstant: self.imageSize).isActive = true
         } else if isProgress {
             self.stackView.insertArrangedSubview(self.activityIndicator, at: 0)
+            self.activityIndicator.widthAnchor.constraint(equalToConstant: self.activityIndicator.frame.width).isActive = true
+            self.activityIndicator.heightAnchor.constraint(equalToConstant: self.activityIndicator.frame.height).isActive = true
             self.activityIndicator.startAnimating()
         }
         
@@ -165,7 +169,7 @@ public class ToastView: UIView {
         }
         containerView.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
-        
+       
         switch position {
         case .topLeft:
             NSLayoutConstraint.activate([
@@ -255,4 +259,3 @@ public class ToastView: UIView {
     }
 
 }
-

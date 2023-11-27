@@ -129,7 +129,7 @@ class ViewController: UIViewController {
     
     @IBAction func showProgressAndMessage(){
         toast.allowMultipleToasts = true
-        toast.showToast(message: "Add more toast", isProgress: true, position: .top)
+        toast.showToast(message: "Add more toast to test tex in two different line, start with this information, Add more toast to test tex in two different line, start with this information", isProgress: true, position: .top)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             //ToastManager.shared.cancelCurrentToast()
         }
@@ -146,6 +146,7 @@ class ViewController: UIViewController {
     
 }
 
+@available(iOS 17.0, *)
 #Preview() {
     ViewController()
 }
