@@ -123,6 +123,12 @@ public class ToastView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // Nella classe ToastView
+    func updateMessage(newMessage: String) {
+        // Aggiorna il messaggio visualizzato nel toast
+        self.toastLabel.text = newMessage
+    }
     
     /// Displays a toast message on the screen.
     ///

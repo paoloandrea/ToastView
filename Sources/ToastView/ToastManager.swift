@@ -28,6 +28,13 @@ public final class ToastManager {
     
     /// The padding between toasts when multiple toasts are displayed.
     private var toastPadding: CGFloat = 4
+
+    /// Update message print in ToastView without alloc other toast
+    public var message: String? {
+        didSet {
+            updateCurrentToastMessage()
+        }
+    }
     
     /// Shows a toast message with optional image, progress, position, duration, view, and background settings.
     /// - Parameters:
@@ -160,4 +167,14 @@ public final class ToastManager {
         
         isCurrentlyShowing = false
     }
+
+
+    private func updateCurrentToastMessage() {
+        guard let message = message, !toastQueue.isEmpty else { return }
+    
+        // Aggiorna il messaggio del toast corrente senza ricrearlo
+        let currentToast = toastQueue.first
+        currentToast?.updateMessage(newMessage: message)
+    }
+
 }
