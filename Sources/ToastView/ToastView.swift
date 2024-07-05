@@ -96,6 +96,11 @@ public class ToastView: UIView {
         
         addSubview(stackView)
         stackView.addArrangedSubview(toastLabel)
+#if os(iOS)
+        let widthToast:CGFloat = 300
+#elseif os(tvOS)
+        let widthToast:CGFloat = 800
+#endif
         
         NSLayoutConstraint.activate([
             visualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -108,8 +113,7 @@ public class ToastView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -labelPadding),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: toastPadding),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -toastPadding),
-            
-            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 300),
+            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: widthToast),
         ])
         
         layer.cornerRadius = (toastHeight+toastPadding) / 2
@@ -230,6 +234,7 @@ public class ToastView: UIView {
         }
         
         containerView.addSubview(self)
+        containerView.layoutIfNeeded()
         
         self.alpha = 0.0
         

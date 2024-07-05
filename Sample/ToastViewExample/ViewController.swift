@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var stackView:UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var titleLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.text = "ToastView"
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var descriptionLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -44,33 +44,58 @@ class ViewController: UIViewController {
     private lazy var buttonA : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Message ++", for: .normal)
+#if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showMessage()
         }, for: .touchUpInside)
+#elseif os(tvOS)
+        button.addAction(UIAction { [weak self] action in
+            self?.showMessage()
+        }, for: .primaryActionTriggered)
+#endif
         return button
     }()
     private lazy var buttonB : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Image and Message", for: .normal)
+#if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showImageAndMessage()
         }, for: .touchUpInside)
+#elseif os(tvOS)
+        button.addAction(UIAction { [weak self] action in
+            self?.showImageAndMessage()
+        }, for: .primaryActionTriggered)
+#endif
         return button
     }()
     private lazy var buttonC : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Progress and Message", for: .normal)
+        
+#if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showProgressAndMessage()
         }, for: .touchUpInside)
+#elseif os(tvOS)
+        button.addAction(UIAction { [weak self] action in
+            self?.showProgressAndMessage()
+        }, for: .primaryActionTriggered)
+#endif
         return button
     }()
     private lazy var buttonD : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Message and blur background", for: .normal)
+#if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showMessageAndBackground()
         }, for: .touchUpInside)
+#elseif os(tvOS)
+        button.addAction(UIAction { [weak self] action in
+            self?.showMessageAndBackground()
+        }, for: .primaryActionTriggered)
+#endif
         return button
     }()
     
@@ -108,14 +133,14 @@ class ViewController: UIViewController {
     }
     
     
-   let toast = ToastManager.shared
+    let toast = ToastManager.shared
     @IBAction func showMessage(){
         toast.allowMultipleToasts = true
         toast.showToast(message: "10:19 AM", position: .bottom)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30.0) {
-                //self.toast.cancelCurrentToast()
-                self.toast.cancelAllToasts()
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30.0) {
+            //self.toast.cancelCurrentToast()
+            self.toast.cancelAllToasts()
+        }
     }
     
     @IBAction func showImageAndMessage(){

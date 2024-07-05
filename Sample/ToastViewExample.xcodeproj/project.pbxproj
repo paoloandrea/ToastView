@@ -18,6 +18,18 @@
 		527A4D5F2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D5E2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift */; };
 		52CFD4912AF6BBB90023DA30 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFD4902AF6BBB90023DA30 /* ToastView.swift */; };
 		52CFD4932AF798190023DA30 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFD4922AF798190023DA30 /* ToastManager.swift */; };
+		52DAE64F2C388C0C0043AA72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DAE64E2C388C0C0043AA72 /* AppDelegate.swift */; };
+		52DAE6542C388C0C0043AA72 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 52DAE6532C388C0C0043AA72 /* Base */; };
+		52DAE6562C388C0E0043AA72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52DAE6552C388C0E0043AA72 /* Assets.xcassets */; };
+		52DAE6592C388C0E0043AA72 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 52DAE6582C388C0E0043AA72 /* Base */; };
+		52DAE6632C388C0E0043AA72 /* tvToastViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DAE6622C388C0E0043AA72 /* tvToastViewExampleTests.swift */; };
+		52DAE66D2C388C0E0043AA72 /* tvToastViewExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DAE66C2C388C0E0043AA72 /* tvToastViewExampleUITests.swift */; };
+		52DAE66F2C388C0E0043AA72 /* tvToastViewExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DAE66E2C388C0E0043AA72 /* tvToastViewExampleUITestsLaunchTests.swift */; };
+		52DAE6792C388C1F0043AA72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D3F2AE044B700C7BA1C /* ViewController.swift */; };
+		52DAE67A2C388C230043AA72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A4D3D2AE044B700C7BA1C /* SceneDelegate.swift */; };
+		52DAE67C2C388C290043AA72 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFD4922AF798190023DA30 /* ToastManager.swift */; };
+		52DAE67D2C388C290043AA72 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFD4902AF6BBB90023DA30 /* ToastView.swift */; };
+		52DAE67E2C388F560043AA72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 527A4D442AE044B900C7BA1C /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +46,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 527A4D372AE044B700C7BA1C;
 			remoteInfo = ToastViewExample;
+		};
+		52DAE65F2C388C0E0043AA72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527A4D302AE044B700C7BA1C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52DAE64B2C388C0C0043AA72;
+			remoteInfo = tvToastViewExample;
+		};
+		52DAE6692C388C0E0043AA72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527A4D302AE044B700C7BA1C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52DAE64B2C388C0C0043AA72;
+			remoteInfo = tvToastViewExample;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -53,6 +79,16 @@
 		527A4D5E2AE044B900C7BA1C /* ToastViewExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		52CFD4902AF6BBB90023DA30 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		52CFD4922AF798190023DA30 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		52DAE64C2C388C0C0043AA72 /* tvToastViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvToastViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52DAE64E2C388C0C0043AA72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		52DAE6532C388C0C0043AA72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		52DAE6552C388C0E0043AA72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		52DAE6582C388C0E0043AA72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		52DAE65E2C388C0E0043AA72 /* tvToastViewExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvToastViewExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52DAE6622C388C0E0043AA72 /* tvToastViewExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvToastViewExampleTests.swift; sourceTree = "<group>"; };
+		52DAE6682C388C0E0043AA72 /* tvToastViewExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvToastViewExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52DAE66C2C388C0E0043AA72 /* tvToastViewExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvToastViewExampleUITests.swift; sourceTree = "<group>"; };
+		52DAE66E2C388C0E0043AA72 /* tvToastViewExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvToastViewExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +113,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		52DAE6492C388C0C0043AA72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE65B2C388C0E0043AA72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE6652C388C0E0043AA72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -86,6 +143,9 @@
 				527A4D3A2AE044B700C7BA1C /* ToastViewExample */,
 				527A4D512AE044B900C7BA1C /* ToastViewExampleTests */,
 				527A4D5B2AE044B900C7BA1C /* ToastViewExampleUITests */,
+				52DAE64D2C388C0C0043AA72 /* tvToastViewExample */,
+				52DAE6612C388C0E0043AA72 /* tvToastViewExampleTests */,
+				52DAE66B2C388C0E0043AA72 /* tvToastViewExampleUITests */,
 				527A4D392AE044B700C7BA1C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,6 +156,9 @@
 				527A4D382AE044B700C7BA1C /* ToastViewExample.app */,
 				527A4D4E2AE044B900C7BA1C /* ToastViewExampleTests.xctest */,
 				527A4D582AE044B900C7BA1C /* ToastViewExampleUITests.xctest */,
+				52DAE64C2C388C0C0043AA72 /* tvToastViewExample.app */,
+				52DAE65E2C388C0E0043AA72 /* tvToastViewExampleTests.xctest */,
+				52DAE6682C388C0E0043AA72 /* tvToastViewExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,6 +211,34 @@
 				52CFD4902AF6BBB90023DA30 /* ToastView.swift */,
 			);
 			path = ToastView;
+			sourceTree = "<group>";
+		};
+		52DAE64D2C388C0C0043AA72 /* tvToastViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				52DAE64E2C388C0C0043AA72 /* AppDelegate.swift */,
+				52DAE6522C388C0C0043AA72 /* Main.storyboard */,
+				52DAE6552C388C0E0043AA72 /* Assets.xcassets */,
+				52DAE6572C388C0E0043AA72 /* LaunchScreen.storyboard */,
+			);
+			path = tvToastViewExample;
+			sourceTree = "<group>";
+		};
+		52DAE6612C388C0E0043AA72 /* tvToastViewExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				52DAE6622C388C0E0043AA72 /* tvToastViewExampleTests.swift */,
+			);
+			path = tvToastViewExampleTests;
+			sourceTree = "<group>";
+		};
+		52DAE66B2C388C0E0043AA72 /* tvToastViewExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				52DAE66C2C388C0E0043AA72 /* tvToastViewExampleUITests.swift */,
+				52DAE66E2C388C0E0043AA72 /* tvToastViewExampleUITestsLaunchTests.swift */,
+			);
+			path = tvToastViewExampleUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +299,59 @@
 			productReference = 527A4D582AE044B900C7BA1C /* ToastViewExampleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		52DAE64B2C388C0C0043AA72 /* tvToastViewExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52DAE6762C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExample" */;
+			buildPhases = (
+				52DAE6482C388C0C0043AA72 /* Sources */,
+				52DAE6492C388C0C0043AA72 /* Frameworks */,
+				52DAE64A2C388C0C0043AA72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tvToastViewExample;
+			productName = tvToastViewExample;
+			productReference = 52DAE64C2C388C0C0043AA72 /* tvToastViewExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52DAE65D2C388C0E0043AA72 /* tvToastViewExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52DAE6772C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExampleTests" */;
+			buildPhases = (
+				52DAE65A2C388C0E0043AA72 /* Sources */,
+				52DAE65B2C388C0E0043AA72 /* Frameworks */,
+				52DAE65C2C388C0E0043AA72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52DAE6602C388C0E0043AA72 /* PBXTargetDependency */,
+			);
+			name = tvToastViewExampleTests;
+			productName = tvToastViewExampleTests;
+			productReference = 52DAE65E2C388C0E0043AA72 /* tvToastViewExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		52DAE6672C388C0E0043AA72 /* tvToastViewExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52DAE6782C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExampleUITests" */;
+			buildPhases = (
+				52DAE6642C388C0E0043AA72 /* Sources */,
+				52DAE6652C388C0E0043AA72 /* Frameworks */,
+				52DAE6662C388C0E0043AA72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52DAE66A2C388C0E0043AA72 /* PBXTargetDependency */,
+			);
+			name = tvToastViewExampleUITests;
+			productName = tvToastViewExampleUITests;
+			productReference = 52DAE6682C388C0E0043AA72 /* tvToastViewExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -215,7 +359,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					527A4D372AE044B700C7BA1C = {
@@ -228,6 +372,17 @@
 					527A4D572AE044B900C7BA1C = {
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = 527A4D372AE044B700C7BA1C;
+					};
+					52DAE64B2C388C0C0043AA72 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					52DAE65D2C388C0E0043AA72 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 52DAE64B2C388C0C0043AA72;
+					};
+					52DAE6672C388C0E0043AA72 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 52DAE64B2C388C0C0043AA72;
 					};
 				};
 			};
@@ -249,6 +404,9 @@
 				527A4D372AE044B700C7BA1C /* ToastViewExample */,
 				527A4D4D2AE044B900C7BA1C /* ToastViewExampleTests */,
 				527A4D572AE044B900C7BA1C /* ToastViewExampleUITests */,
+				52DAE64B2C388C0C0043AA72 /* tvToastViewExample */,
+				52DAE65D2C388C0E0043AA72 /* tvToastViewExampleTests */,
+				52DAE6672C388C0E0043AA72 /* tvToastViewExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -272,6 +430,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		527A4D562AE044B900C7BA1C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE64A2C388C0C0043AA72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52DAE6562C388C0E0043AA72 /* Assets.xcassets in Resources */,
+				52DAE6592C388C0E0043AA72 /* Base in Resources */,
+				52DAE67E2C388F560043AA72 /* Assets.xcassets in Resources */,
+				52DAE6542C388C0C0043AA72 /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE65C2C388C0E0043AA72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE6662C388C0E0043AA72 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -310,6 +493,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		52DAE6482C388C0C0043AA72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52DAE6792C388C1F0043AA72 /* ViewController.swift in Sources */,
+				52DAE67C2C388C290043AA72 /* ToastManager.swift in Sources */,
+				52DAE67D2C388C290043AA72 /* ToastView.swift in Sources */,
+				52DAE64F2C388C0C0043AA72 /* AppDelegate.swift in Sources */,
+				52DAE67A2C388C230043AA72 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE65A2C388C0E0043AA72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52DAE6632C388C0E0043AA72 /* tvToastViewExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52DAE6642C388C0E0043AA72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52DAE66F2C388C0E0043AA72 /* tvToastViewExampleUITestsLaunchTests.swift in Sources */,
+				52DAE66D2C388C0E0043AA72 /* tvToastViewExampleUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -322,6 +534,16 @@
 			isa = PBXTargetDependency;
 			target = 527A4D372AE044B700C7BA1C /* ToastViewExample */;
 			targetProxy = 527A4D592AE044B900C7BA1C /* PBXContainerItemProxy */;
+		};
+		52DAE6602C388C0E0043AA72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52DAE64B2C388C0C0043AA72 /* tvToastViewExample */;
+			targetProxy = 52DAE65F2C388C0E0043AA72 /* PBXContainerItemProxy */;
+		};
+		52DAE66A2C388C0E0043AA72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52DAE64B2C388C0C0043AA72 /* tvToastViewExample */;
+			targetProxy = 52DAE6692C388C0E0043AA72 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -338,6 +560,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				527A4D472AE044B900C7BA1C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		52DAE6522C388C0C0043AA72 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52DAE6532C388C0C0043AA72 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		52DAE6572C388C0E0043AA72 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52DAE6582C388C0E0043AA72 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -598,6 +836,142 @@
 			};
 			name = Release;
 		};
+		52DAE6702C388C0E0043AA72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Debug;
+		};
+		52DAE6712C388C0E0043AA72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Release;
+		};
+		52DAE6722C388C0E0043AA72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tvToastViewExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tvToastViewExample";
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Debug;
+		};
+		52DAE6732C388C0E0043AA72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tvToastViewExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tvToastViewExample";
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Release;
+		};
+		52DAE6742C388C0E0043AA72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = tvToastViewExample;
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Debug;
+		};
+		52DAE6752C388C0E0043AA72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K55EW783KQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tv.iptelevision.tvToastViewExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = tvToastViewExample;
+				TVOS_DEPLOYMENT_TARGET = 17.5;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -633,6 +1007,33 @@
 			buildConfigurations = (
 				527A4D692AE044B900C7BA1C /* Debug */,
 				527A4D6A2AE044B900C7BA1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52DAE6762C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52DAE6702C388C0E0043AA72 /* Debug */,
+				52DAE6712C388C0E0043AA72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52DAE6772C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52DAE6722C388C0E0043AA72 /* Debug */,
+				52DAE6732C388C0E0043AA72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52DAE6782C388C0E0043AA72 /* Build configuration list for PBXNativeTarget "tvToastViewExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52DAE6742C388C0E0043AA72 /* Debug */,
+				52DAE6752C388C0E0043AA72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
