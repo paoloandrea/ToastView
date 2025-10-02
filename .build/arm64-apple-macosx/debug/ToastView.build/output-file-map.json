@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/master.swiftdeps"
+  },
+  "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastManager.swift": {
+    "dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.d",
+    "object": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.swift.o",
+    "swiftmodule": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.swiftdeps",
+    "diagnostics": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.dia"
+  },
+  "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastView.swift": {
+    "dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.d",
+    "object": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.swift.o",
+    "swiftmodule": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView~partial.swiftmodule",
+    "swift-dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.swiftdeps",
+    "diagnostics": "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.dia"
+  }
+}

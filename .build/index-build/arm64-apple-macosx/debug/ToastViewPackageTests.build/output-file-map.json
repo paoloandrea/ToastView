@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/master.swiftdeps"
+  },
+  "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.d",
+    "object": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/paolo/Dev/Apps/Package/ToastView/.build/index-build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.dia"
+  }
+}

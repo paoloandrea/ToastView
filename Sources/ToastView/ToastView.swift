@@ -31,7 +31,8 @@ public class ToastView: UIView {
     /// The label displaying the toast's message.
     private let toastLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        // UIVibrancyEffect will handle the color automatically
+        label.textColor = .label
 #if os(iOS)
         label.font = .systemFont(ofSize: 15, weight: .semibold)
 #elseif os(tvOS)
@@ -54,15 +55,48 @@ public class ToastView: UIView {
     /// A loading spinner, shown when the toast represents a loading or progress state.
     private let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .white
+        // UIVibrancyEffect will handle the color automatically
+        indicator.color = .label
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
     
     // Add to your ToastView class properties:
     private var backgroundView: UIView? = nil
-    
+
     private var duration: TimeInterval = 0.0
+
+    /// Creates a visual effect view with Liquid Glass on iOS 26+ or blur effect on older versions
+    /// - Returns: A configured UIVisualEffectView
+    private func createVisualEffectView() -> UIVisualEffectView {
+        if #available(iOS 26.0, tvOS 26.0, *) {
+            // Use Liquid Glass effect for iOS/tvOS 26+
+            let glassEffect = UIGlassEffect(style: .regular)
+
+            // Check if reduce transparency is enabled for accessibility
+            if !UIAccessibility.isReduceTransparencyEnabled {
+                // Apply a dynamic tint that adapts to light/dark mode
+                let dynamicTintColor = UIColor { traitCollection in
+                    switch traitCollection.userInterfaceStyle {
+                    case .dark:
+                        return UIColor.black.withAlphaComponent(0.3)
+                    case .light, .unspecified:
+                        return UIColor.white.withAlphaComponent(0.2)
+                    @unknown default:
+                        return UIColor.black.withAlphaComponent(0.3)
+                    }
+                }
+                glassEffect.tintColor = dynamicTintColor
+            }
+
+            return UIVisualEffectView(effect: glassEffect)
+        } else {
+            // Fallback to UIBlurEffect for iOS/tvOS 25 and earlier
+            // Use systemMaterial to automatically adapt to light/dark mode
+            let blurEffect = UIBlurEffect(style: .systemMaterial)
+            return UIVisualEffectView(effect: blurEffect)
+        }
+    }
     
 #if os(iOS)
     private var labelPadding: CGFloat = 16.0
@@ -86,16 +120,37 @@ public class ToastView: UIView {
     
     private init() {
         super.init(frame: .zero)
-        
-        let blurEffect = UIBlurEffect(style: .dark)
-        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+
+        // Create the visual effect view with version-appropriate effect
+        let visualEffectView = createVisualEffectView()
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(visualEffectView)
-        
+
         backgroundColor = .clear
-        
-        addSubview(stackView)
-        stackView.addArrangedSubview(toastLabel)
+
+        // Add vibrancy effect for content to properly blend with blur (iOS 13-25)
+        // For iOS 26+, Liquid Glass handles text rendering directly without vibrancy
+        if #available(iOS 26.0, tvOS 26.0, *) {
+            // iOS 26+ Liquid Glass renders content directly in contentView
+            visualEffectView.contentView.addSubview(stackView)
+            stackView.addArrangedSubview(toastLabel)
+        } else {
+            // iOS 13-25 uses UIVibrancyEffect with blur for proper text rendering
+            let vibrancyEffect = UIVibrancyEffect(blurEffect: visualEffectView.effect as! UIBlurEffect)
+            let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+            vibrancyView.translatesAutoresizingMaskIntoConstraints = false
+            visualEffectView.contentView.addSubview(vibrancyView)
+
+            vibrancyView.contentView.addSubview(stackView)
+            stackView.addArrangedSubview(toastLabel)
+
+            NSLayoutConstraint.activate([
+                vibrancyView.leadingAnchor.constraint(equalTo: visualEffectView.contentView.leadingAnchor),
+                vibrancyView.trailingAnchor.constraint(equalTo: visualEffectView.contentView.trailingAnchor),
+                vibrancyView.topAnchor.constraint(equalTo: visualEffectView.contentView.topAnchor),
+                vibrancyView.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor)
+            ])
+        }
 #if os(iOS)
         let widthToast:CGFloat = 300
 #elseif os(tvOS)
@@ -154,7 +209,9 @@ public class ToastView: UIView {
         self.position = position
         
         if let image = image {
-            self.iconImageView.image = image.withTintColor(.white)
+            // UIVibrancyEffect will handle the tinting automatically
+            self.iconImageView.image = image.withRenderingMode(.alwaysTemplate)
+            self.iconImageView.tintColor = .label
             self.stackView.insertArrangedSubview(self.iconImageView, at: 0)
             self.iconImageView.widthAnchor.constraint(equalToConstant: self.imageSize).isActive = true
             self.iconImageView.heightAnchor.constraint(equalToConstant: self.imageSize).isActive = true
@@ -168,10 +225,22 @@ public class ToastView: UIView {
         
         if let view = view {
             self.containerView = view
-        } else if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            self.containerView = keyWindow
         } else {
-            return
+            // Get the key window using the appropriate API based on iOS version
+            if #available(iOS 15.0, tvOS 15.0, *) {
+                // Use UIWindowScene for iOS/tvOS 15+
+                self.containerView = UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .first(where: { $0.isKeyWindow })
+            } else {
+                // Fallback for iOS/tvOS 13-14
+                self.containerView = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+            }
+
+            if self.containerView == nil {
+                return
+            }
         }
         
         guard let containerView = containerView else {
@@ -220,16 +289,49 @@ public class ToastView: UIView {
         
         if withBackground {
             let background = UIView(frame: containerView.bounds)
-            background.backgroundColor = UIColor.black.withAlphaComponent(0.6) // semi-transparent
+            // Use dynamic background color that adapts to light/dark mode
+            let dynamicBackgroundColor = UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor.black.withAlphaComponent(0.6)
+                case .light, .unspecified:
+                    return UIColor.black.withAlphaComponent(0.4)
+                @unknown default:
+                    return UIColor.black.withAlphaComponent(0.6)
+                }
+            }
+            background.backgroundColor = dynamicBackgroundColor
             background.isUserInteractionEnabled = true // disable interactions
             containerView.addSubview(background)
-            
-            // Use UIVisualEffectView for blur effect if needed
-            let blurEffect = UIBlurEffect(style: .dark)
-            let visualEffectView = UIVisualEffectView(effect: blurEffect)
-            visualEffectView.frame = background.bounds
-            background.addSubview(visualEffectView)
-            
+
+            // Use version-appropriate visual effect
+            let backgroundEffectView: UIVisualEffectView
+            if #available(iOS 26.0, tvOS 26.0, *) {
+                // Use Liquid Glass effect for iOS/tvOS 26+
+                let glassEffect = UIGlassEffect(style: .clear)
+                // Apply a dynamic tint for the background overlay
+                let dynamicTintColor = UIColor { traitCollection in
+                    switch traitCollection.userInterfaceStyle {
+                    case .dark:
+                        return UIColor.black.withAlphaComponent(0.4)
+                    case .light, .unspecified:
+                        return UIColor.white.withAlphaComponent(0.3)
+                    @unknown default:
+                        return UIColor.black.withAlphaComponent(0.4)
+                    }
+                }
+                glassEffect.tintColor = dynamicTintColor
+                backgroundEffectView = UIVisualEffectView(effect: glassEffect)
+            } else {
+                // Fallback to UIBlurEffect for iOS/tvOS 25 and earlier
+                // Use systemMaterial to automatically adapt to light/dark mode
+                let blurEffect = UIBlurEffect(style: .systemMaterial)
+                backgroundEffectView = UIVisualEffectView(effect: blurEffect)
+            }
+
+            backgroundEffectView.frame = background.bounds
+            background.addSubview(backgroundEffectView)
+
             backgroundView = background
         }
         

@@ -1,0 +1,663 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.xctest/Contents/MacOS/ToastViewPackageTests",
+      "packagePath" : "/Users/paolo/Dev/Apps/Package/ToastView",
+      "productName" : "ToastViewPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.ToastView-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/sources",
+      "importPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "ToastView",
+      "moduleOutputPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastView.swiftmodule",
+      "objects" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.swift.o",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j14",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/include/ToastView-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-suppress-warnings",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "toastview"
+      ],
+      "outputFileMapPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastView.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastManager.swift",
+        "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastView.swift"
+      ],
+      "tempsPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.ToastViewPackageTests-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/sources",
+      "importPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastViewTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "ToastViewPackageTests",
+      "moduleOutputPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastViewPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j14",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/include/ToastViewPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-suppress-warnings",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "toastview"
+      ],
+      "outputFileMapPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastViewPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.ToastViewTests-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/sources",
+      "importPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Tests/ToastViewTests/ToastViewTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastView.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "ToastViewTests",
+      "moduleOutputPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastViewTests.swiftmodule",
+      "objects" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/ToastViewTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j14",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-suppress-warnings",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "toastview"
+      ],
+      "outputFileMapPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/ToastViewTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules/ToastViewTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/paolo/Dev/Apps/Package/ToastView/Tests/ToastViewTests/ToastViewTests.swift"
+      ],
+      "tempsPath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "ToastView" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "ToastView",
+      "-package-name",
+      "toastview",
+      "-c",
+      "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastManager.swift",
+      "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastView.swift",
+      "-I",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j14",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/include/ToastView-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-suppress-warnings",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "toastview",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "ToastViewPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "ToastViewPackageTests",
+      "-package-name",
+      "toastview",
+      "-c",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j14",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/include/ToastViewPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-suppress-warnings",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "toastview",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "ToastViewTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "ToastViewTests",
+      "-package-name",
+      "toastview",
+      "-c",
+      "/Users/paolo/Dev/Apps/Package/ToastView/Tests/ToastViewTests/ToastViewTests.swift",
+      "-I",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j14",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-suppress-warnings",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "toastview",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "ToastView" : [
+
+    ],
+    "ToastViewPackageTests" : [
+      "ToastViewTests",
+      "ToastView"
+    ],
+    "ToastViewTests" : [
+      "ToastView"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Sources/ToastView/ToastView.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/sources"
+    },
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/sources"
+    },
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastView.build/ToastView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/ToastViewTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/paolo/Dev/Apps/Package/ToastView/Tests/ToastViewTests/ToastViewTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/ToastViewTests.build/sources"
+    },
+    "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/paolo/Dev/Apps/Package/ToastView/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
