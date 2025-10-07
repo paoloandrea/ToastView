@@ -1,6 +1,6 @@
 # ToastView 2.0 🍞
 
-Easily display toast messages with optional icons, progress indicators, and blurred backgrounds in your iOS app.
+Easily display toast messages with optional icons, progress indicators, and stunning Liquid Glass effects in your iOS and tvOS apps.
 
 <p align="center">
   <img src="https://github.com/paoloandrea/ToastView/blob/main/Assets/toastview_v1.gif?raw=true" alt="Screenshot of ToastView" width="250px" />
@@ -11,16 +11,36 @@ Easily display toast messages with optional icons, progress indicators, and blur
 
 - 🌟 Display simple toast messages or toasts with icons.
 - 🔄 Optional progress indicator for toasts that represent a loading state.
-- 🌌 Optional dark blurred background to overlay entire application.
-- 📱 Support for both iOS and tvOS.
-- 📍 Customizable toast display positions.
+- ✨ **Liquid Glass effect** on iOS 26+ / tvOS 26+ with automatic fallback to blur on older versions.
+- 🌓 Automatic dark mode and light mode support.
+- 🌌 Optional blurred/glass background to overlay entire application.
+- 📱 Full support for iOS 13+ and tvOS 13+.
+- 📍 7 customizable toast display positions (topLeft, top, topRight, center, bottomLeft, bottom, bottomRight).
+- 🔤 Multi-line message support.
+- 🎯 Multiple toasts support with smart positioning.
+
+## Requirements
+
+- iOS 13.0+ / tvOS 13.0+
+- Xcode 15.0+
+- Swift 5.9+
 
 ## Installation
 
+### Swift Package Manager
+
+Add ToastView to your project via Swift Package Manager:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/paoloandrea/ToastView.git", from: "2.0.0")
+]
+```
+
 ### Manual
 
-1. Download the `ToastManager.swift` and `ToastView.swift` file from this repository.
-2. Add it to your Xcode project.
+1. Download the `ToastManager.swift` and `ToastView.swift` files from this repository.
+2. Add them to your Xcode project.
 
 ## Usage
 
@@ -75,30 +95,51 @@ toastManager.showToast(
     }
 ```
 
-## Customization
+## Advanced Features
 
-### Toast Duration
+### Update Toast Message
 
-You can set the duration for which a toast should be displayed.
+Update the message of the current toast without creating a new one:
 
 ```swift
-toastManager.showToast(message: "This will dismiss in 5 seconds", duration: 5.0)
+toastManager.message = "Updated message"
 ```
 
-### Toast Position
-Position the toast wherever you want using the ToastPosition enum.
+### Multiple Toasts
+
+Enable multiple toasts to stack vertically:
+
+```swift
+toastManager.allowMultipleToasts = true
+toastManager.showToast(message: "First toast", position: .top)
+toastManager.showToast(message: "Second toast", position: .top)
+```
+
+### Toast Positions
+
+Available positions: `.topLeft`, `.top`, `.topRight`, `.center`, `.bottomLeft`, `.bottom`, `.bottomRight`
+
+## Visual Effects
+
+### Liquid Glass Effect (iOS 26+ / tvOS 26+)
+
+On iOS 26 and tvOS 26 or later, ToastView automatically uses the stunning **Liquid Glass effect** (`UIGlassEffect`) for a modern, translucent appearance. On older versions, it gracefully falls back to `UIBlurEffect`.
+
+### Dark Mode Support
+
+ToastView automatically adapts to the system's light/dark mode appearance using semantic colors and adaptive materials.
 
 ## Configuration Options
 
-- **allowMultipleToasts**: Set to true to allow showing multiple toasts at once.
-- **toastPadding**: The spacing between multiple toasts, if enabled.
-
-This guide should provide you with the basic usage of the ToastManager class to manage toast notifications in your app.
+- **allowMultipleToasts**: Set to `true` to allow showing multiple toasts at once (default: `false`).
+- **message**: Update the current toast message without recreating the toast.
+- **duration**: Set to `0` for indefinite display, or specify seconds for auto-dismiss.
+- **withBackground**: Add a blurred/glass overlay behind the toast.
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-#### MIT
-https://choosealicense.com/licenses/mit/
+
+MIT License - see [LICENSE](https://choosealicense.com/licenses/mit/) for details.

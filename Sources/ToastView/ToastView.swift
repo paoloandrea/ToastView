@@ -70,30 +70,18 @@ public class ToastView: UIView {
     /// - Returns: A configured UIVisualEffectView
     private func createVisualEffectView() -> UIVisualEffectView {
         if #available(iOS 26.0, tvOS 26.0, *) {
-            // Use Liquid Glass effect for iOS/tvOS 26+
+            // Use Liquid Glass effect for iOS/tvOS 26+ (internally iOS 18+)
             let glassEffect = UIGlassEffect(style: .regular)
-
-            // Check if reduce transparency is enabled for accessibility
-            if !UIAccessibility.isReduceTransparencyEnabled {
-                // Apply a dynamic tint that adapts to light/dark mode
-                let dynamicTintColor = UIColor { traitCollection in
-                    switch traitCollection.userInterfaceStyle {
-                    case .dark:
-                        return UIColor.black.withAlphaComponent(0.3)
-                    case .light, .unspecified:
-                        return UIColor.white.withAlphaComponent(0.2)
-                    @unknown default:
-                        return UIColor.black.withAlphaComponent(0.3)
-                    }
-                }
-                glassEffect.tintColor = dynamicTintColor
-            }
-
             return UIVisualEffectView(effect: glassEffect)
         } else {
-            // Fallback to UIBlurEffect for iOS/tvOS 25 and earlier
-            // Use systemMaterial to automatically adapt to light/dark mode
+            // Fallback to UIBlurEffect for older versions
+            #if os(iOS)
+            // Use systemMaterial on iOS to automatically adapt to light/dark mode
             let blurEffect = UIBlurEffect(style: .systemMaterial)
+            #elseif os(tvOS)
+            // Use regular blur on tvOS (systemMaterial not available)
+            let blurEffect = UIBlurEffect(style: .regular)
+            #endif
             return UIVisualEffectView(effect: blurEffect)
         }
     }
@@ -128,14 +116,13 @@ public class ToastView: UIView {
 
         backgroundColor = .clear
 
-        // Add vibrancy effect for content to properly blend with blur (iOS 13-25)
-        // For iOS 26+, Liquid Glass handles text rendering directly without vibrancy
+        // Add vibrancy effect for proper text rendering
         if #available(iOS 26.0, tvOS 26.0, *) {
             // iOS 26+ Liquid Glass renders content directly in contentView
             visualEffectView.contentView.addSubview(stackView)
             stackView.addArrangedSubview(toastLabel)
         } else {
-            // iOS 13-25 uses UIVibrancyEffect with blur for proper text rendering
+            // Older versions use UIVibrancyEffect with blur for proper text rendering
             let vibrancyEffect = UIVibrancyEffect(blurEffect: visualEffectView.effect as! UIBlurEffect)
             let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
             vibrancyView.translatesAutoresizingMaskIntoConstraints = false
@@ -304,32 +291,26 @@ public class ToastView: UIView {
             background.isUserInteractionEnabled = true // disable interactions
             containerView.addSubview(background)
 
-            // Use version-appropriate visual effect
+            // Use version-appropriate visual effect for background
             let backgroundEffectView: UIVisualEffectView
             if #available(iOS 26.0, tvOS 26.0, *) {
                 // Use Liquid Glass effect for iOS/tvOS 26+
-                let glassEffect = UIGlassEffect(style: .clear)
-                // Apply a dynamic tint for the background overlay
-                let dynamicTintColor = UIColor { traitCollection in
-                    switch traitCollection.userInterfaceStyle {
-                    case .dark:
-                        return UIColor.black.withAlphaComponent(0.4)
-                    case .light, .unspecified:
-                        return UIColor.white.withAlphaComponent(0.3)
-                    @unknown default:
-                        return UIColor.black.withAlphaComponent(0.4)
-                    }
-                }
-                glassEffect.tintColor = dynamicTintColor
+                let glassEffect = UIGlassEffect(style: .regular)
                 backgroundEffectView = UIVisualEffectView(effect: glassEffect)
             } else {
-                // Fallback to UIBlurEffect for iOS/tvOS 25 and earlier
-                // Use systemMaterial to automatically adapt to light/dark mode
+                // Fallback to UIBlurEffect for older versions
+                #if os(iOS)
+                // Use systemMaterial on iOS to automatically adapt to light/dark mode
                 let blurEffect = UIBlurEffect(style: .systemMaterial)
+                #elseif os(tvOS)
+                // Use regular blur on tvOS (systemMaterial not available)
+                let blurEffect = UIBlurEffect(style: .regular)
+                #endif
                 backgroundEffectView = UIVisualEffectView(effect: blurEffect)
             }
 
             backgroundEffectView.frame = background.bounds
+            backgroundEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             background.addSubview(backgroundEffectView)
 
             backgroundView = background
