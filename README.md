@@ -120,6 +120,21 @@ toastManager.showToast(message: "Second toast", position: .top)
 
 Available positions: `.topLeft`, `.top`, `.topRight`, `.center`, `.bottomLeft`, `.bottom`, `.bottomRight`
 
+### Smart TabBar Detection
+
+When displaying toasts at bottom positions (`.bottom`, `.bottomLeft`, `.bottomRight`), ToastView automatically detects if a `UITabBarController` is present in the view hierarchy. If a visible tab bar is found, the toast will be positioned **16px above the tab bar** instead of at the bottom safe area, ensuring the toast is always visible and not obscured by the tab bar.
+
+This feature works automatically without any configuration:
+
+```swift
+// In a view controller within a UITabBarController
+toastManager.showToast(message: "Toast positioned above tab bar", position: .bottom)
+```
+
+**Note**: The detection only works when:
+- A `UITabBarController` exists in the view hierarchy
+- The tab bar is visible (not hidden)
+
 ## Visual Effects
 
 ### Liquid Glass Effect (iOS 26+ / tvOS 26+)
