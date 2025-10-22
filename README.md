@@ -118,22 +118,39 @@ toastManager.showToast(message: "Second toast", position: .top)
 
 ### Toast Positions
 
-Available positions: `.topLeft`, `.top`, `.topRight`, `.center`, `.bottomLeft`, `.bottom`, `.bottomRight`
+Available positions:
+
+- Standard positions: `.topLeft`, `.top`, `.topRight`, `.center`, `.bottomLeft`, `.bottom`, `.bottomRight`
+- Forced above TabBar: `.bottomLeftAboveTabBar`, `.bottomAboveTabBar`, `.bottomRightAboveTabBar`
 
 ### Smart TabBar Detection
 
-When displaying toasts at bottom positions (`.bottom`, `.bottomLeft`, `.bottomRight`), ToastView automatically detects if a `UITabBarController` is present in the view hierarchy. If a visible tab bar is found, the toast will be positioned **16px above the tab bar** instead of at the bottom safe area, ensuring the toast is always visible and not obscured by the tab bar.
+ToastView offers two modes for handling tab bars:
 
-This feature works automatically without any configuration:
+#### Automatic Detection (Default)
+
+When displaying toasts at bottom positions (`.bottom`, `.bottomLeft`, `.bottomRight`), ToastView automatically detects if a `UITabBarController` is present in the view hierarchy. If a visible tab bar is found, the toast will be positioned **16px above the tab bar**.
 
 ```swift
-// In a view controller within a UITabBarController
-toastManager.showToast(message: "Toast positioned above tab bar", position: .bottom)
+// Automatic detection - positions above tab bar if present
+toastManager.showToast(message: "Auto-positioned toast", position: .bottom)
 ```
 
-**Note**: The detection only works when:
+#### Manual Control
+
+For explicit control, use the dedicated "AboveTabBar" positions (`.bottomAboveTabBar`, `.bottomLeftAboveTabBar`, `.bottomRightAboveTabBar`). These positions **always** place the toast above the standard tab bar height, even if no tab bar is detected.
+
+```swift
+// Always positions above tab bar area (even without UITabBarController)
+toastManager.showToast(message: "Forced above tab bar", position: .bottomAboveTabBar)
+```
+
+**Note**: Automatic detection works when:
+
 - A `UITabBarController` exists in the view hierarchy
 - The tab bar is visible (not hidden)
+
+The manual positions use a fallback height (49px + 16px spacing) when no tab bar is detected.
 
 ## Visual Effects
 

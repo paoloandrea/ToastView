@@ -118,6 +118,12 @@ public final class ToastManager {
                 let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset - tabBarOffset)
                 bottomConstraint.isActive = true
                 yOffset -= (height + toastPadding) // Aggiorna yOffset per il prossimo toast
+            case .bottomAboveTabBar, .bottomLeftAboveTabBar, .bottomRightAboveTabBar:
+                // Force positioning above tab bar with fallback to standard tab bar height
+                let forcedOffset = tabBarOffset > 0 ? tabBarOffset : 49 + 16
+                let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset - forcedOffset)
+                bottomConstraint.isActive = true
+                yOffset -= (height + toastPadding) // Aggiorna yOffset per il prossimo toast
             case .top, .topLeft, .topRight:
                 let topConstraint = toastView.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: yOffset)
                 topConstraint.isActive = true

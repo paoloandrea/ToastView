@@ -37,7 +37,9 @@ swift test --filter ToastViewTests.testShowWithMessage
 **ToastView** (`Sources/ToastView/ToastView.swift`)
 - Custom UIView with blurred background using UIVisualEffectView
 - Contains stack view organizing icon/spinner + message label
-- Supports 7 position options via `ToastPosition` enum (topLeft, top, topRight, center, bottomLeft, bottom, bottomRight)
+- Supports 10 position options via `ToastPosition` enum:
+  - Standard: topLeft, top, topRight, center, bottomLeft, bottom, bottomRight
+  - Forced above TabBar: bottomLeftAboveTabBar, bottomAboveTabBar, bottomRightAboveTabBar
 - Platform-specific sizing: iOS uses smaller dimensions, tvOS uses larger
 
 ### Key Interactions
@@ -56,6 +58,15 @@ swift test --filter ToastViewTests.testShowWithMessage
 3. **Message Updates**:
    - `ToastManager.message` property updates current toast without creating new instance
    - Directly modifies `toastLabel.text` via `updateMessage()` method
+
+4. **Smart TabBar Detection**:
+   - `getTabBarOffset()` method (in both ToastView and ToastManager) detects UITabBarController in view hierarchy
+   - Works by traversing UIResponder chain to find UITabBarController
+   - Only applies offset if tab bar exists and is visible (not hidden)
+
+   Two modes available:
+   - **Automatic**: Standard bottom positions (.bottom, .bottomLeft, .bottomRight) auto-detect tab bar and position 16px above if found
+   - **Manual**: Forced positions (.bottomAboveTabBar, .bottomLeftAboveTabBar, .bottomRightAboveTabBar) always position above tab bar area, using detected height or fallback (49px + 16px) if no tab bar exists
 
 ### Platform Support
 

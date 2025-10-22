@@ -9,6 +9,7 @@ import UIKit
 /// An enum representing the possible positions for a toast on the screen.
 public enum ToastPosition {
     case topLeft, top, topRight, center, bottomLeft, bottom, bottomRight
+    case bottomLeftAboveTabBar, bottomAboveTabBar, bottomRightAboveTabBar
 }
 
 /// A `ToastView` is a custom UIView used to display non-intrusive messages for a short duration.
@@ -294,6 +295,27 @@ public class ToastView: UIView {
             NSLayoutConstraint.activate([
                 self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
                 self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
+            ])
+        case .bottomLeftAboveTabBar:
+            // Force positioning above tab bar regardless of automatic detection
+            let forcedOffset = getTabBarOffset(for: containerView)
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + (forcedOffset > 0 ? forcedOffset : 49 + 16))),
+            ])
+        case .bottomAboveTabBar:
+            // Force positioning above tab bar regardless of automatic detection
+            let forcedOffset = getTabBarOffset(for: containerView)
+            NSLayoutConstraint.activate([
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + (forcedOffset > 0 ? forcedOffset : 49 + 16))),
+            ])
+        case .bottomRightAboveTabBar:
+            // Force positioning above tab bar regardless of automatic detection
+            let forcedOffset = getTabBarOffset(for: containerView)
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + (forcedOffset > 0 ? forcedOffset : 49 + 16))),
             ])
         }
         
