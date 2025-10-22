@@ -18,6 +18,7 @@ Easily display toast messages with optional icons, progress indicators, and stun
 - 📍 7 customizable toast display positions (topLeft, top, topRight, center, bottomLeft, bottom, bottomRight).
 - 🔤 Multi-line message support.
 - 🎯 Multiple toasts support with smart positioning.
+- 📊 **Smart TabBar detection**: Automatically positions bottom toasts above the UITabBarController when present (16px spacing).
 
 ## Requirements
 

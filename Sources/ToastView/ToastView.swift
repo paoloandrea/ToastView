@@ -99,11 +99,31 @@ public class ToastView: UIView {
     public var position:ToastPosition?
     public var containerView: UIView?
     var dismissHandler: (() -> Void)?
-    
+
     // Indicates whether the ToastView is currently showing on the screen
     private var _isShowing: Bool = false
     public var isShowing: Bool {
         return _isShowing
+    }
+
+    /// Returns the tab bar height with additional spacing if a UITabBarController is present
+    /// - Parameter containerView: The container view to search for a tab bar controller
+    /// - Returns: The offset to apply (tab bar height + 16px) or 0 if no tab bar exists
+    private func getTabBarOffset(for containerView: UIView) -> CGFloat {
+        // Try to find the UITabBarController in the view hierarchy
+        var responder: UIResponder? = containerView
+
+        while responder != nil {
+            if let tabBarController = responder as? UITabBarController,
+               !tabBarController.tabBar.isHidden {
+                // Tab bar exists and is visible, return its height + 16px spacing
+                return tabBarController.tabBar.frame.height + 16
+            }
+            responder = responder?.next
+        }
+
+        // No tab bar controller found or tab bar is hidden
+        return 0
     }
     
     private init() {
@@ -235,7 +255,10 @@ public class ToastView: UIView {
         }
         containerView.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
-       
+
+        // Calculate tab bar offset for bottom positions
+        let tabBarOffset = getTabBarOffset(for: containerView)
+
         switch position {
         case .topLeft:
             NSLayoutConstraint.activate([
@@ -260,17 +283,17 @@ public class ToastView: UIView {
         case .bottomLeft:
             NSLayoutConstraint.activate([
                 self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
             ])
         case .bottom:
             NSLayoutConstraint.activate([
                 self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
             ])
         case .bottomRight:
             NSLayoutConstraint.activate([
                 self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -self.toastPadding),
+                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
             ])
         }
         

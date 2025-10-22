@@ -64,11 +64,34 @@ public final class ToastManager {
         
     }
     
+    /// Returns the tab bar height with additional spacing if a UITabBarController is present
+    /// - Parameter containerView: The container view to search for a tab bar controller
+    /// - Returns: The offset to apply (tab bar height + 16px) or 0 if no tab bar exists
+    private func getTabBarOffset(for containerView: UIView) -> CGFloat {
+        // Try to find the UITabBarController in the view hierarchy
+        var responder: UIResponder? = containerView
+
+        while responder != nil {
+            if let tabBarController = responder as? UITabBarController,
+               !tabBarController.tabBar.isHidden {
+                // Tab bar exists and is visible, return its height + 16px spacing
+                return tabBarController.tabBar.frame.height + 16
+            }
+            responder = responder?.next
+        }
+
+        // No tab bar controller found or tab bar is hidden
+        return 0
+    }
+
     /// Updates the positions of all the toasts in the queue within the container view.
     /// It respects the `allowMultipleToasts` setting and adjusts the layout constraints accordingly.
     /// - Parameter containerView: The `UIView` that contains the toasts.
     private func updateToastPositions(in containerView: UIView) {
         guard allowMultipleToasts else { return }
+
+        // Calculate tab bar offset for bottom positions
+        let tabBarOffset = getTabBarOffset(for: containerView)
         var yOffset:CGFloat = 0
         // Rimuove tutti i vecchi vincoli di tipo top o bottom
         NSLayoutConstraint.deactivate(
@@ -92,7 +115,7 @@ public final class ToastManager {
             
             switch toastView.position {
             case .bottom, .bottomLeft, .bottomRight:
-                let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset)
+                let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset - tabBarOffset)
                 bottomConstraint.isActive = true
                 yOffset -= (height + toastPadding) // Aggiorna yOffset per il prossimo toast
             case .top, .topLeft, .topRight:
