@@ -1,209 +1,174 @@
 //
 //  ToastManager.swift
-//  ToastViewExample
+//  ToastView
 //
 //  Created by Paolo Rossignoli on 05/11/23.
 //
 
 import UIKit
-/// The `ToastManager` class is a singleton that manages the display of toast messages on the screen.
-/// It ensures that only one instance of the manager exists and controls the queuing and displaying of toasts.
-/// It provides functionality to show, dismiss, and cancel toasts with various configurations.
+
+/// `ToastManager` is a singleton that coordinates toast display, queuing and
+/// dismissal. Use `ToastManager.shared` rather than creating instances.
 public final class ToastManager {
-    /// The shared instance of `ToastManager`.
+
     public static let shared = ToastManager()
-    
-    /// Private initialization to ensure only one instance is created.
     private init() {}
-    
-    /// The queue that holds the `ToastView` objects that are waiting to be displayed.
+
     private var toastQueue = [ToastView]()
-    
-    /// A boolean value indicating whether a toast is currently being displayed.
-    public var isCurrentlyShowing = false
-    
-    /// A boolean value that determines whether multiple toasts can be shown at once.
-    /// The default value is `false`, meaning only one toast will be shown at a time.
+
+    /// `true` while at least one toast is on screen.
+    public var isCurrentlyShowing: Bool { !toastQueue.isEmpty }
+
+    /// When `false` (default), `showToast` is a no-op while another toast is
+    /// already visible. When `true`, toasts stack vertically.
     public var allowMultipleToasts = false
-    
-    /// The padding between toasts when multiple toasts are displayed.
-    private var toastPadding: CGFloat = 4
 
-    /// Update message print in ToastView without alloc other toast
+    private let toastPadding: CGFloat = 4
+
+    /// Updates the message on the current toast in place. With multiple toasts
+    /// active, only the first toast in the queue is updated.
     public var message: String? {
-        didSet {
-            updateCurrentToastMessage()
-        }
+        didSet { updateCurrentToastMessage() }
     }
-    
-    /// Shows a toast message with optional image, progress, position, duration, view, and background settings.
+
+    /// Shows a toast.
     /// - Parameters:
-    ///   - message: The message to be displayed on the toast.
-    ///   - image: An optional image to display on the toast.
-    ///   - isProgress: A boolean indicating if the toast is showing a progress indicator.
-    ///   - position: The position on the screen where the toast will be displayed.
-    ///   - duration: The time interval the toast will be on screen before auto-dismissing.
-    ///   - view: An optional view to add the toast to. If not provided, the toast will be added to the key window.
-    ///   - withBackground: A boolean indicating if the toast should be displayed with a background.
-    public func showToast(message: String, image: UIImage? = nil, isProgress: Bool = false, position: ToastPosition = .center, duration: TimeInterval = 2.0, in view: UIView? = nil, withBackground: Bool = false) {
-        
-        let containerView = view ?? UIApplication.shared.keyWindow ?? UIView()
-        
-        if !allowMultipleToasts && isCurrentlyShowing {
-            return
-        }
-        
+    ///   - message: The message displayed in the toast.
+    ///   - image: Optional leading icon.
+    ///   - isProgress: When `true` (and `image` is nil), shows a spinner.
+    ///   - position: One of the `ToastPosition` cases.
+    ///   - duration: Auto-dismiss after this interval. Pass `0` to keep it
+    ///     visible until manually dismissed.
+    ///   - view: Optional container. Defaults to the key window.
+    ///   - withBackground: When `true`, dims and blurs the rest of the screen.
+    public func showToast(message: String,
+                          image: UIImage? = nil,
+                          isProgress: Bool = false,
+                          position: ToastPosition = .center,
+                          duration: TimeInterval = 2.0,
+                          in view: UIView? = nil,
+                          withBackground: Bool = false) {
+
+        if !allowMultipleToasts && isCurrentlyShowing { return }
+
+        guard let containerView = view ?? ToastView.resolvedKeyWindow() else { return }
+
         let toast = ToastView()
-        toast.prepareToShow(message: message, image: image, isProgress: isProgress, position: position, duration: duration, in:view, withBackground: withBackground)
-        
+        toast.prepareToShow(message: message,
+                            image: image,
+                            isProgress: isProgress,
+                            position: position,
+                            duration: duration,
+                            in: containerView,
+                            withBackground: withBackground)
+
         toastQueue.append(toast)
-        containerView.addSubview(toast)
-        
-        // Update positions of toasts in the queue
         updateToastPositions(in: containerView)
-        
-    }
-    
-    /// Returns the tab bar height with additional spacing if a UITabBarController is present
-    /// - Parameter containerView: The container view to search for a tab bar controller
-    /// - Returns: The offset to apply (tab bar height + 16px) or 0 if no tab bar exists
-    private func getTabBarOffset(for containerView: UIView) -> CGFloat {
-        // Try to find the UITabBarController in the view hierarchy
-        var responder: UIResponder? = containerView
-
-        while responder != nil {
-            if let tabBarController = responder as? UITabBarController,
-               !tabBarController.tabBar.isHidden {
-                // Tab bar exists and is visible, return its height + 16px spacing
-                return tabBarController.tabBar.frame.height + 16
-            }
-            responder = responder?.next
-        }
-
-        // No tab bar controller found or tab bar is hidden
-        return 0
     }
 
-    /// Updates the positions of all the toasts in the queue within the container view.
-    /// It respects the `allowMultipleToasts` setting and adjusts the layout constraints accordingly.
-    /// - Parameter containerView: The `UIView` that contains the toasts.
+    /// Recalculates stacked positions when `allowMultipleToasts` is `true`.
     private func updateToastPositions(in containerView: UIView) {
         guard allowMultipleToasts else { return }
 
-        // Calculate tab bar offset for bottom positions
-        let tabBarOffset = getTabBarOffset(for: containerView)
-        var yOffset:CGFloat = 0
-        // Rimuove tutti i vecchi vincoli di tipo top o bottom
-        NSLayoutConstraint.deactivate(
-            containerView.constraints.filter { constraint in
-                if let firstItem = constraint.firstItem as? UIView, toastQueue.contains(where: { $0 == firstItem }) {
-                    return constraint.firstAttribute == .top || constraint.firstAttribute == .bottom
-                }
-                if let secondItem = constraint.secondItem as? UIView, toastQueue.contains(where: { $0 == secondItem }) {
-                    return constraint.secondAttribute == .top || constraint.secondAttribute == .bottom
-                }
-                return false
+        let tabBarOffset = containerView.toast_tabBarOffset()
+        var yOffset: CGFloat = 0
+
+        // Drop existing top/bottom constraints owned by the queued toasts.
+        let queued = Set(toastQueue.map(ObjectIdentifier.init))
+        let toRemove = containerView.constraints.filter { constraint in
+            if let firstItem = constraint.firstItem as? UIView,
+               queued.contains(ObjectIdentifier(firstItem)),
+               constraint.firstAttribute == .top || constraint.firstAttribute == .bottom {
+                return true
             }
-        )
-        
+            if let secondItem = constraint.secondItem as? UIView,
+               queued.contains(ObjectIdentifier(secondItem)),
+               constraint.secondAttribute == .top || constraint.secondAttribute == .bottom {
+                return true
+            }
+            return false
+        }
+        NSLayoutConstraint.deactivate(toRemove)
+
         for toastView in toastQueue.reversed() {
             guard let superview = toastView.superview else { continue }
             toastView.translatesAutoresizingMaskIntoConstraints = false
-            
-            // Calcola l'altezza del toast qui, se necessario.
+
             let height = toastView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            
+
             switch toastView.position {
             case .bottom, .bottomLeft, .bottomRight:
-                let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset - tabBarOffset)
-                bottomConstraint.isActive = true
-                yOffset -= (height + toastPadding) // Aggiorna yOffset per il prossimo toast
+                toastView.bottomAnchor.constraint(
+                    equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                    constant: yOffset - tabBarOffset
+                ).isActive = true
+                yOffset -= (height + toastPadding)
             case .bottomAboveTabBar, .bottomLeftAboveTabBar, .bottomRightAboveTabBar:
-                // Force positioning above tab bar with fallback to standard tab bar height
                 let forcedOffset = tabBarOffset > 0 ? tabBarOffset : 49 + 16
-                let bottomConstraint = toastView.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: yOffset - forcedOffset)
-                bottomConstraint.isActive = true
-                yOffset -= (height + toastPadding) // Aggiorna yOffset per il prossimo toast
+                toastView.bottomAnchor.constraint(
+                    equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                    constant: yOffset - forcedOffset
+                ).isActive = true
+                yOffset -= (height + toastPadding)
             case .top, .topLeft, .topRight:
-                let topConstraint = toastView.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: yOffset)
-                topConstraint.isActive = true
-                yOffset += (height + toastPadding) // Aggiorna yOffset per il prossimo toast
+                toastView.topAnchor.constraint(
+                    equalTo: superview.safeAreaLayoutGuide.topAnchor,
+                    constant: yOffset
+                ).isActive = true
+                yOffset += (height + toastPadding)
             case .center:
-                let centerConstraint = toastView.centerYAnchor.constraint(equalTo: superview.centerYAnchor, constant: yOffset)
-                centerConstraint.isActive = true
-                yOffset -= (height + toastPadding)   // Sposta verso il basso per il prossimo toast centrato
-                //yOffset -= (height + toastPadding)  // Sposta verso l'alto per il prossimo toast centrato
+                toastView.centerYAnchor.constraint(
+                    equalTo: superview.centerYAnchor,
+                    constant: yOffset
+                ).isActive = true
+                yOffset -= (height + toastPadding)
             case .none:
                 break
             }
         }
-        
-        // Anima le modifiche del layout.
+
         UIView.animate(withDuration: 0.3) {
             containerView.layoutIfNeeded()
         }
     }
-    
-    /// Dismisses a specific toast view from the screen and from the queue.
-    /// - Parameters:
-    ///   - toast: The `ToastView` object that needs to be dismissed.
-    ///   - containerView: The `UIView` that contains the toast.
+
+    /// Dismisses a specific toast.
     func dismiss(toast: ToastView, from containerView: UIView) {
         guard toastQueue.contains(toast) else { return }
-        
-        toast.dismiss() {
-            // Remove the toast from the queue
+        toast.dismiss { [weak self] in
+            guard let self = self else { return }
             if let index = self.toastQueue.firstIndex(of: toast) {
                 self.toastQueue.remove(at: index)
             }
-            
-            // Remove the toast view from the superview
-            toast.removeFromSuperview()
-            
-            self.isCurrentlyShowing = !self.toastQueue.isEmpty
-            
-            // Update positions of remaining toasts in the queue
             self.updateToastPositions(in: containerView)
         }
     }
-    
-    /// Cancels and dismisses the currently displayed toast, if any, and updates the queue and positions of remaining toasts.
+
+    /// Dismisses the currently displayed toast (the first in the queue).
     public func cancelCurrentToast() {
-        // Se c'è un toast attualmente mostrato, lo rimuove
         guard let currentToast = toastQueue.first else { return }
-        
-        currentToast.dismiss() {
-            // Rimuovi il toast corrente dalla coda
-            self.toastQueue.removeFirst()
-            self.isCurrentlyShowing = false
-            
-            // Aggiorna la posizione dei restanti toasts nella coda
+        currentToast.dismiss { [weak self] in
+            guard let self = self else { return }
+            if !self.toastQueue.isEmpty {
+                self.toastQueue.removeFirst()
+            }
             if let containerView = currentToast.superview {
                 self.updateToastPositions(in: containerView)
             }
         }
     }
-    
-    /// Cancels and clears all queued and currently displayed toasts.
-    /// This will remove all `ToastView` objects from the screen and empty the queue.
-    public func cancelAllToasts() {
-        while !toastQueue.isEmpty {
-            let toast = toastQueue.removeLast()
-            toast.dismiss() {
-                toast.removeFromSuperview()
-            }
-        }
-        
-        isCurrentlyShowing = false
-    }
 
+    /// Dismisses every queued and visible toast.
+    public func cancelAllToasts() {
+        let toasts = toastQueue
+        toastQueue.removeAll()
+        for toast in toasts {
+            toast.dismiss()
+        }
+    }
 
     private func updateCurrentToastMessage() {
-        guard let message = message, !toastQueue.isEmpty else { return }
-    
-        // Aggiorna il messaggio del toast corrente senza ricrearlo
-        let currentToast = toastQueue.first
-        currentToast?.updateMessage(newMessage: message)
+        guard let message = message else { return }
+        toastQueue.first?.updateMessage(newMessage: message)
     }
-
 }
