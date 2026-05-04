@@ -27,9 +27,12 @@
 - Performance ottimizzate dal sistema
 
 ### Piattaforme supportate:
-- iOS 18.0+
-- iPadOS 18.0+
-- macOS 15.0+
+- iOS 26.0+
+- iPadOS 26.0+
+- macOS 26.0+ (Tahoe)
+- tvOS 26.0+
+- watchOS 26.0+
+- visionOS 26.0+
 
 ---
 
@@ -1447,8 +1450,8 @@ class MainViewController: UIViewController {
 ## Note sulla Compatibilità
 
 ### Requisiti Minimi
-- **SwiftUI Liquid Glass**: iOS 18.0+, iPadOS 18.0+, macOS 15.0+
-- **UIKit Material**: iOS 13.0+, iPadOS 13.0+, macOS 10.15+
+- **SwiftUI / UIKit Liquid Glass**: iOS 26.0+, iPadOS 26.0+, macOS 26.0+, tvOS 26.0+
+- **UIKit Material (fallback)**: iOS 13.0+, iPadOS 13.0+, macOS 10.15+, tvOS 13.0+
 
 ### Fallback per Versioni Precedenti
 
@@ -1460,8 +1463,8 @@ struct AdaptiveGlassView: View {
             Text("Content")
         }
         .background {
-            if #available(iOS 18.0, *) {
-                // Nuovo glass effect
+            if #available(iOS 26.0, *) {
+                // Nuovo Liquid Glass effect
                 RoundedRectangle(cornerRadius: 15)
                     .glassEffect(.regular)
             } else {
