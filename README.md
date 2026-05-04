@@ -15,7 +15,7 @@ Easily display toast messages with optional icons, progress indicators, and stun
 - 🌓 Automatic dark mode and light mode support.
 - 🌌 Optional blurred/glass background to overlay entire application.
 - 📱 Full support for iOS 13+ and tvOS 13+.
-- 📍 7 customizable toast display positions (topLeft, top, topRight, center, bottomLeft, bottom, bottomRight).
+- 📍 10 customizable toast display positions (7 standard + 3 forced above tab bar).
 - 🔤 Multi-line message support.
 - 🎯 Multiple toasts support with smart positioning.
 - 📊 **Smart TabBar detection**: Automatically positions bottom toasts above the UITabBarController when present (16px spacing).
