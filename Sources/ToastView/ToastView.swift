@@ -33,6 +33,7 @@ public class ToastView: UIView {
     private let toastLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
+        label.accessibilityIdentifier = "toastMessageLabel"
 #if os(iOS)
         label.font = .systemFont(ofSize: 15, weight: .semibold)
 #elseif os(tvOS)
@@ -46,6 +47,9 @@ public class ToastView: UIView {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityIdentifier = "toastIconImageView"
+        imageView.accessibilityLabel = "Toast icon"
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -53,6 +57,8 @@ public class ToastView: UIView {
     private let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.color = .label
+        indicator.isAccessibilityElement = true
+        indicator.accessibilityIdentifier = "toastActivityIndicator"
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
@@ -74,15 +80,17 @@ public class ToastView: UIView {
     private let toastHeight: CGFloat = 60
     private let toastWidth: CGFloat = 800
 #endif
-    private let toastPadding: CGFloat = 8.0
+    static let edgePadding: CGFloat = 8.0
 
     // MARK: - Public state
 
     public var position: ToastPosition?
-    public var containerView: UIView?
+    public weak var containerView: UIView?
 
     /// `true` while the toast is attached to a superview.
     public var isShowing: Bool { superview != nil }
+
+    private var activeVerticalConstraint: NSLayoutConstraint?
 
     // MARK: - Init
 
@@ -97,6 +105,7 @@ public class ToastView: UIView {
 
     private func setupHierarchy() {
         backgroundColor = .clear
+        accessibilityIdentifier = "toastView"
 
         visualEffectView = Self.makeGlassEffectView()
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +113,7 @@ public class ToastView: UIView {
 
         // Mask the glass surface itself, not the host view, so Liquid Glass
         // renders correctly within the rounded shape on iOS/tvOS 26+.
-        visualEffectView.layer.cornerRadius = (toastHeight + toastPadding) / 2
+        visualEffectView.layer.cornerRadius = (toastHeight + Self.edgePadding) / 2
         visualEffectView.layer.cornerCurve = .continuous
         visualEffectView.layer.masksToBounds = true
 
@@ -138,11 +147,11 @@ public class ToastView: UIView {
             visualEffectView.topAnchor.constraint(equalTo: topAnchor),
             visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: toastHeight - toastPadding),
+            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: toastHeight - Self.edgePadding),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: labelPadding),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -labelPadding),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: toastPadding),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -toastPadding),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Self.edgePadding),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Self.edgePadding),
             stackView.widthAnchor.constraint(lessThanOrEqualToConstant: toastWidth),
         ])
     }
@@ -218,6 +227,8 @@ public class ToastView: UIView {
                 }
             }
             background.isUserInteractionEnabled = true
+            background.isAccessibilityElement = true
+            background.accessibilityIdentifier = "toastBackgroundOverlay"
             background.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             containerView.addSubview(background)
 
@@ -234,58 +245,93 @@ public class ToastView: UIView {
         let tabBarOffset = containerView.toast_tabBarOffset()
         let forcedTabBarOffset = tabBarOffset > 0 ? tabBarOffset : Self.fallbackTabBarOffset
 
+        var horizontalConstraints = [NSLayoutConstraint]()
+        let verticalConstraint: NSLayoutConstraint
+
         switch position {
         case .topLeft:
-            NSLayoutConstraint.activate([
-                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
-                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
-            ])
+            horizontalConstraints = [
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: Self.edgePadding)
+            ]
+            verticalConstraint = self.topAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.topAnchor,
+                constant: Self.edgePadding
+            )
         case .top:
-            NSLayoutConstraint.activate([
-                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
-                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
-            ])
+            horizontalConstraints = [
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor)
+            ]
+            verticalConstraint = self.topAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.topAnchor,
+                constant: Self.edgePadding
+            )
         case .topRight:
-            NSLayoutConstraint.activate([
-                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
-                self.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: self.toastPadding),
-            ])
+            horizontalConstraints = [
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -Self.edgePadding)
+            ]
+            verticalConstraint = self.topAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.topAnchor,
+                constant: Self.edgePadding
+            )
         case .center:
-            NSLayoutConstraint.activate([
-                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
-                self.centerYAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerYAnchor),
-            ])
+            horizontalConstraints = [
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor)
+            ]
+            verticalConstraint = self.centerYAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.centerYAnchor
+            )
         case .bottomLeft:
-            NSLayoutConstraint.activate([
-                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: Self.edgePadding)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + tabBarOffset)
+            )
         case .bottom:
-            NSLayoutConstraint.activate([
-                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + tabBarOffset)
+            )
         case .bottomRight:
-            NSLayoutConstraint.activate([
-                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + tabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -Self.edgePadding)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + tabBarOffset)
+            )
         case .bottomLeftAboveTabBar:
-            NSLayoutConstraint.activate([
-                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + forcedTabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: Self.edgePadding)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + forcedTabBarOffset)
+            )
         case .bottomAboveTabBar:
-            NSLayoutConstraint.activate([
-                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + forcedTabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.centerXAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.centerXAnchor)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + forcedTabBarOffset)
+            )
         case .bottomRightAboveTabBar:
-            NSLayoutConstraint.activate([
-                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -self.toastPadding),
-                self.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -(self.toastPadding + forcedTabBarOffset)),
-            ])
+            horizontalConstraints = [
+                self.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -Self.edgePadding)
+            ]
+            verticalConstraint = self.bottomAnchor.constraint(
+                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+                constant: -(Self.edgePadding + forcedTabBarOffset)
+            )
         }
+
+        NSLayoutConstraint.activate(horizontalConstraints)
+        replaceVerticalConstraint(with: verticalConstraint)
 
         containerView.layoutIfNeeded()
 
@@ -310,6 +356,7 @@ public class ToastView: UIView {
             self.removeFromSuperview()
             self.backgroundView?.removeFromSuperview()
             self.backgroundView = nil
+            self.containerView = nil
             completion?()
         }
     }
@@ -320,18 +367,27 @@ public class ToastView: UIView {
     /// `UITabBarController` is present and the caller forced an "AboveTabBar"
     /// position. iOS 26's floating tab bar is auto-detected via the responder
     /// chain, so this fallback only applies when there's no controller at all.
-    private static let fallbackTabBarOffset: CGFloat = 49 + 16
+    static let fallbackTabBarOffset: CGFloat = 49 + 16
 
-    /// Resolves the active key window using the modern `connectedScenes` API
-    /// when available, falling back to the legacy `windows` array.
+    /// Resolves the active key window from connected scenes, then falls back to
+    /// the app-wide window list for scene-less contexts such as some test hosts.
     static func resolvedKeyWindow() -> UIWindow? {
-        if #available(iOS 15.0, tvOS 15.0, *) {
-            return UIApplication.shared.connectedScenes
-                .compactMap { $0 as? UIWindowScene }
-                .flatMap { $0.windows }
-                .first(where: { $0.isKeyWindow })
+        let sceneWindow = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first(where: { $0.isKeyWindow })
+
+        if let sceneWindow = sceneWindow {
+            return sceneWindow
         }
+
         return UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+    }
+
+    func replaceVerticalConstraint(with constraint: NSLayoutConstraint) {
+        activeVerticalConstraint?.isActive = false
+        activeVerticalConstraint = constraint
+        activeVerticalConstraint?.isActive = true
     }
 }
 

@@ -1,41 +1,51 @@
-//
-//  ToastViewExampleUITests.swift
-//  ToastViewExampleUITests
-//
-//  Created by Paolo Rossignoli on 18.10.23.
-//
-
 import XCTest
 
 final class ToastViewExampleUITests: XCTestCase {
 
+    private var app: XCUIApplication!
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        app = XCUIApplication()
+        app.launchArguments = ["--ui-testing"]
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testShowsBasicToast() {
+        app.buttons["showMessageButton"].tap()
+
+        let message = app.staticTexts["toastMessageLabel"]
+        XCTAssertTrue(message.waitForExistence(timeout: 1.0))
+        XCTAssertEqual(message.label, "10:19 AM")
+    }
+
+    func testShowsToastWithIcon() {
+        app.buttons["showImageAndMessageButton"].tap()
+
+        XCTAssertTrue(app.images["toastIconImageView"].waitForExistence(timeout: 1.0))
+        XCTAssertEqual(app.staticTexts["toastMessageLabel"].label, "Starred")
+    }
+
+    func testShowsProgressToast() {
+        app.buttons["showProgressAndMessageButton"].tap()
+
+        XCTAssertTrue(app.activityIndicators["toastActivityIndicator"].waitForExistence(timeout: 1.0))
+        XCTAssertEqual(app.staticTexts["toastMessageLabel"].label, "Loading...")
+    }
+
+    func testShowsBackgroundOverlay() {
+        app.buttons["showMessageAndBackgroundButton"].tap()
+
+        XCTAssertTrue(app.otherElements["toastBackgroundOverlay"].waitForExistence(timeout: 1.0))
+    }
+
+    func testShowsMultipleToastsWhenEnabled() {
+        let button = app.buttons["showMessageButton"]
+        button.tap()
+        button.tap()
+
+        let messages = app.staticTexts.matching(identifier: "toastMessageLabel")
+        XCTAssertTrue(messages.element(boundBy: 1).waitForExistence(timeout: 1.0))
+        XCTAssertEqual(messages.count, 2)
     }
 }

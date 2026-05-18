@@ -23,7 +23,7 @@ Easily display toast messages with optional icons, progress indicators, and stun
 ## Requirements
 
 - iOS 13.0+ / tvOS 13.0+
-- Xcode 15.0+
+- Xcode 26.0+ (required to compile the `UIGlassEffect` implementation)
 - Swift 5.9+
 
 ## Installation

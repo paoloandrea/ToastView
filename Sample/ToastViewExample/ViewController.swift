@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     private lazy var buttonA : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Message ++", for: .normal)
+        button.accessibilityIdentifier = "showMessageButton"
 #if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showMessage()
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
     private lazy var buttonB : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Image and Message", for: .normal)
+        button.accessibilityIdentifier = "showImageAndMessageButton"
 #if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showImageAndMessage()
@@ -72,6 +74,7 @@ class ViewController: UIViewController {
     private lazy var buttonC : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Progress and Message", for: .normal)
+        button.accessibilityIdentifier = "showProgressAndMessageButton"
         
 #if os(iOS)
         button.addAction(UIAction { [weak self] action in
@@ -87,6 +90,7 @@ class ViewController: UIViewController {
     private lazy var buttonD : UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Message and blur background", for: .normal)
+        button.accessibilityIdentifier = "showMessageAndBackgroundButton"
 #if os(iOS)
         button.addAction(UIAction { [weak self] action in
             self?.showMessageAndBackground()
@@ -134,9 +138,17 @@ class ViewController: UIViewController {
     
     
     let toast = ToastManager.shared
+    private var isUITesting: Bool {
+        ProcessInfo.processInfo.arguments.contains("--ui-testing")
+    }
+
+    private var demoToastDuration: TimeInterval {
+        isUITesting ? 0 : 2.0
+    }
+
     @IBAction func showMessage(){
         toast.allowMultipleToasts = true
-        toast.showToast(message: "10:19 AM", position: .bottom)
+        toast.showToast(message: "10:19 AM", position: .bottom, duration: demoToastDuration)
         DispatchQueue.main.asyncAfter(deadline: .now() + 30.0) {
             //self.toast.cancelCurrentToast()
             self.toast.cancelAllToasts()
@@ -146,7 +158,7 @@ class ViewController: UIViewController {
     @IBAction func showImageAndMessage(){
         let image = UIImage(systemName: "star.fill")
         toast.allowMultipleToasts = true
-        toast.showToast(message: "10:19 AM", image: image, position: .center)
+        toast.showToast(message: "Starred", image: image, position: .center, duration: demoToastDuration)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             //self.toast.cancelCurrentToast()
         }
@@ -154,7 +166,7 @@ class ViewController: UIViewController {
     
     @IBAction func showProgressAndMessage(){
         toast.allowMultipleToasts = true
-        toast.showToast(message: "Add more toast to test tex in two different line, start with this information, Add more toast to test tex in two different line, start with this information", isProgress: true, position: .top)
+        toast.showToast(message: "Loading...", isProgress: true, position: .top, duration: demoToastDuration)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             //ToastManager.shared.cancelCurrentToast()
         }
@@ -162,7 +174,7 @@ class ViewController: UIViewController {
     
     @IBAction func showMessageAndBackground(){
         toast.allowMultipleToasts = false
-        toast.showToast(message: "10:19 AM", isProgress: true, position: .center, withBackground: true)
+        toast.showToast(message: "Please wait", isProgress: true, position: .center, duration: demoToastDuration, withBackground: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.toast.cancelCurrentToast()
@@ -171,7 +183,7 @@ class ViewController: UIViewController {
     
 }
 
-@available(iOS 17.0, *)
+@available(iOS 17.0, tvOS 17.0, *)
 #Preview() {
     ViewController()
 }

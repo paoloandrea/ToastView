@@ -54,15 +54,20 @@ public final class ToastManager {
         guard let containerView = view ?? ToastView.resolvedKeyWindow() else { return }
 
         let toast = ToastView()
+        toastQueue.append(toast)
         toast.prepareToShow(message: message,
                             image: image,
                             isProgress: isProgress,
                             position: position,
                             duration: duration,
                             in: containerView,
-                            withBackground: withBackground)
+                            withBackground: withBackground,
+                            completion: { [weak self, weak toast] in
+                                guard let self = self,
+                                      let toast = toast else { return }
+                                self.removeToast(toast, from: containerView)
+                            })
 
-        toastQueue.append(toast)
         updateToastPositions(in: containerView)
     }
 
@@ -71,24 +76,10 @@ public final class ToastManager {
         guard allowMultipleToasts else { return }
 
         let tabBarOffset = containerView.toast_tabBarOffset()
-        var yOffset: CGFloat = 0
-
-        // Drop existing top/bottom constraints owned by the queued toasts.
-        let queued = Set(toastQueue.map(ObjectIdentifier.init))
-        let toRemove = containerView.constraints.filter { constraint in
-            if let firstItem = constraint.firstItem as? UIView,
-               queued.contains(ObjectIdentifier(firstItem)),
-               constraint.firstAttribute == .top || constraint.firstAttribute == .bottom {
-                return true
-            }
-            if let secondItem = constraint.secondItem as? UIView,
-               queued.contains(ObjectIdentifier(secondItem)),
-               constraint.secondAttribute == .top || constraint.secondAttribute == .bottom {
-                return true
-            }
-            return false
-        }
-        NSLayoutConstraint.deactivate(toRemove)
+        var topOffset: CGFloat = ToastView.edgePadding
+        var centerOffset: CGFloat = 0
+        var bottomOffset: CGFloat = -(ToastView.edgePadding + tabBarOffset)
+        var forcedBottomOffset: CGFloat = -(ToastView.edgePadding + ToastView.fallbackTabBarOffset)
 
         for toastView in toastQueue.reversed() {
             guard let superview = toastView.superview else { continue }
@@ -98,30 +89,37 @@ public final class ToastManager {
 
             switch toastView.position {
             case .bottom, .bottomLeft, .bottomRight:
-                toastView.bottomAnchor.constraint(
+                toastView.replaceVerticalConstraint(with: toastView.bottomAnchor.constraint(
                     equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
-                    constant: yOffset - tabBarOffset
-                ).isActive = true
-                yOffset -= (height + toastPadding)
+                    constant: bottomOffset
+                ))
+                bottomOffset -= (height + toastPadding)
             case .bottomAboveTabBar, .bottomLeftAboveTabBar, .bottomRightAboveTabBar:
-                let forcedOffset = tabBarOffset > 0 ? tabBarOffset : 49 + 16
-                toastView.bottomAnchor.constraint(
-                    equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
-                    constant: yOffset - forcedOffset
-                ).isActive = true
-                yOffset -= (height + toastPadding)
+                if tabBarOffset > 0 {
+                    toastView.replaceVerticalConstraint(with: toastView.bottomAnchor.constraint(
+                        equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                        constant: bottomOffset
+                    ))
+                    bottomOffset -= (height + toastPadding)
+                } else {
+                    toastView.replaceVerticalConstraint(with: toastView.bottomAnchor.constraint(
+                        equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                        constant: forcedBottomOffset
+                    ))
+                    forcedBottomOffset -= (height + toastPadding)
+                }
             case .top, .topLeft, .topRight:
-                toastView.topAnchor.constraint(
+                toastView.replaceVerticalConstraint(with: toastView.topAnchor.constraint(
                     equalTo: superview.safeAreaLayoutGuide.topAnchor,
-                    constant: yOffset
-                ).isActive = true
-                yOffset += (height + toastPadding)
+                    constant: topOffset
+                ))
+                topOffset += (height + toastPadding)
             case .center:
-                toastView.centerYAnchor.constraint(
-                    equalTo: superview.centerYAnchor,
-                    constant: yOffset
-                ).isActive = true
-                yOffset -= (height + toastPadding)
+                toastView.replaceVerticalConstraint(with: toastView.centerYAnchor.constraint(
+                    equalTo: superview.safeAreaLayoutGuide.centerYAnchor,
+                    constant: centerOffset
+                ))
+                centerOffset -= (height + toastPadding)
             case .none:
                 break
             }
@@ -132,29 +130,30 @@ public final class ToastManager {
         }
     }
 
+    private func removeToast(_ toast: ToastView, from containerView: UIView) {
+        guard let index = toastQueue.firstIndex(of: toast) else { return }
+        toastQueue.remove(at: index)
+        updateToastPositions(in: containerView)
+    }
+
     /// Dismisses a specific toast.
     func dismiss(toast: ToastView, from containerView: UIView) {
         guard toastQueue.contains(toast) else { return }
-        toast.dismiss { [weak self] in
-            guard let self = self else { return }
-            if let index = self.toastQueue.firstIndex(of: toast) {
-                self.toastQueue.remove(at: index)
-            }
-            self.updateToastPositions(in: containerView)
+        toast.dismiss { [weak self, weak toast] in
+            guard let self = self,
+                  let toast = toast else { return }
+            self.removeToast(toast, from: containerView)
         }
     }
 
     /// Dismisses the currently displayed toast (the first in the queue).
     public func cancelCurrentToast() {
-        guard let currentToast = toastQueue.first else { return }
-        currentToast.dismiss { [weak self] in
-            guard let self = self else { return }
-            if !self.toastQueue.isEmpty {
-                self.toastQueue.removeFirst()
-            }
-            if let containerView = currentToast.superview {
-                self.updateToastPositions(in: containerView)
-            }
+        guard let currentToast = toastQueue.first,
+              let containerView = currentToast.containerView else { return }
+        currentToast.dismiss { [weak self, weak currentToast] in
+            guard let self = self,
+                  let currentToast = currentToast else { return }
+            self.removeToast(currentToast, from: containerView)
         }
     }
 
